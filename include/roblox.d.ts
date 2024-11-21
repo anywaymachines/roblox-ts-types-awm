@@ -33,6 +33,28 @@ type Tweenable = number | boolean | CFrame | Rect | Color3 | UDim | UDim2 | Vect
 
 type ContentId = string;
 
+interface ContentConstructor {
+	/** Returns a new Content with an asset URI string value referencing content external to the place. */
+	fromUri: (uri: string) => Content;
+
+	/** Returns a new Content with a strong reference to an Object. */
+	fromObject: (object: Object) => Content;
+}
+interface Content {
+	/* An empty Content value with Content.SourceType of None. */
+	none: Content;
+
+	/* The source type of the contained value. */
+	SourceType: Enum.ContentSourceType;
+
+	/* A URI string if Content.SourceType is Uri, otherwise nil. */
+	Uri?: string;
+
+	/* A reference to a non-nil Object if Content.SourceType is Object, otherwise nil. */
+	Object?: Object;
+}
+declare const Content: ContentConstructor;
+
 interface EmoteDictionary {
 	/** When these arrays have more than one emote id in them, it will randomly select one of the emotes to play from the list. */
 	[emoteName: string]: Array<number>;

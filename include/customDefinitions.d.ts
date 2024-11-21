@@ -341,11 +341,11 @@ interface Dragger extends Instance {
 	MouseDown(this: Dragger, mousePart: BasePart, pointOnMousePart: Vector3, parts: Array<BasePart>): void;
 }
 
-interface EditableImage extends Instance {
+interface EditableImage extends Object {
 	ReadPixels(this: EditableImage, position: Vector2, size: Vector2): Array<number>;
 }
 
-interface EditableMesh extends DataModelMesh {
+interface EditableMesh extends Object {
 	FindClosestPointOnSurface(this: EditableMesh, point: Vector3): LuaTuple<[number, Vector3, Vector3]>;
 	FindVerticesWithinSphere(this: EditableMesh, center: Vector3, radius: number): Array<number>;
 	GetAdjacentTriangles(this: EditableMesh, triangleId: number): Array<number>;
@@ -540,7 +540,24 @@ interface InsertService extends Instance {
 	GetUserSets(this: InsertService, userId: number): Array<SetInfo>;
 }
 
-interface Instance {
+interface Object {
+	/** `Instance.Changed` has been intentionally excluded from the roblox-ts type system to maintain soundness with the ValueBase objects.
+	 * Please intersect your type with the `ChangedSignal` global type to unsafely access the `Instance.Changed` event.
+	 * @example
+	 * function f(p: Part) {
+	 * 	(p as Part & ChangedSignal).Changed.Connect(changedPropertyName => {})
+	 * }
+	 */
+	readonly Changed: unknown;
+
+	IsA<T extends keyof Instances>(this: Instance, className: T): this is Instances[T];
+	GetPropertyChangedSignal<T extends Instance>(
+		this: T,
+		propertyName: InstancePropertyNames<T>,
+	): RBXScriptSignal<() => void>;
+}
+
+interface Instance extends Object {
 	/**
 	 * **Clone** creates a copy of an object and all of its descendants, ignoring all objects that are not [Archivable](https://developer.roblox.com/en-us/api-reference/property/Instance/Archivable). The copy of the root object is returned by this function and its [Parent](https://developer.roblox.com/en-us/api-reference/property/Instance/Parent) is set to nil.
 	 *

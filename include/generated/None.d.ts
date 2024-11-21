@@ -124,6 +124,7 @@ interface Services {
 	ReplicatedStorage: ReplicatedStorage;
 	RibbonNotificationService: RibbonNotificationService;
 	RobloxServerStorage: RobloxServerStorage;
+	RomarkRbxAnalyticsService: RomarkRbxAnalyticsService;
 	RomarkService: RomarkService;
 	RtMessagingService: RtMessagingService;
 	RunService: RunService;
@@ -166,6 +167,7 @@ interface Services {
 	TeamCreatePublishService: TeamCreatePublishService;
 	TeamCreateService: TeamCreateService;
 	Teams: Teams;
+	TelemetryService: TelemetryService;
 	TeleportService: TeleportService;
 	TemporaryCageMeshProvider: TemporaryCageMeshProvider;
 	TemporaryScriptService: TemporaryScriptService;
@@ -190,6 +192,7 @@ interface Services {
 	VoiceChatService: VoiceChatService;
 	VRService: VRService;
 	VRStatusService: VRStatusService;
+	WebViewService: WebViewService;
 	Workspace: Workspace;
 }
 
@@ -290,12 +293,10 @@ interface CreatableInstances {
 	DragDetector: DragDetector;
 	Dragger: Dragger;
 	EchoSoundEffect: EchoSoundEffect;
-	EditableImage: EditableImage;
-	EditableMesh: EditableMesh;
 	EqualizerSoundEffect: EqualizerSoundEffect;
 	EulerRotationCurve: EulerRotationCurve;
 	ExperienceInviteOptions: ExperienceInviteOptions;
-	ExplorerFilterInstance: ExplorerFilterInstance;
+	ExplorerFilter: ExplorerFilter;
 	Explosion: Explosion;
 	FaceControls: FaceControls;
 	FileMesh: FileMesh;
@@ -373,8 +374,6 @@ interface CreatableInstances {
 	RemoteFunction: RemoteFunction;
 	ReverbSoundEffect: ReverbSoundEffect;
 	RigidConstraint: RigidConstraint;
-	RobloxEditableImage: RobloxEditableImage;
-	RobloxEditableMesh: RobloxEditableMesh;
 	RocketPropulsion: RocketPropulsion;
 	RodConstraint: RodConstraint;
 	RopeConstraint: RopeConstraint;
@@ -529,8 +528,10 @@ interface Instances extends Services, CreatableInstances {
 	DebuggerLuaResponse: DebuggerLuaResponse;
 	DebuggerVariable: DebuggerVariable;
 	DynamicRotate: DynamicRotate;
+	EditableImage: EditableImage;
+	EditableMesh: EditableMesh;
 	EmotesPages: EmotesPages;
-	ExplorerFilterAutocompleterInstance: ExplorerFilterAutocompleterInstance;
+	ExplorerFilterAutocompleter: ExplorerFilterAutocompleter;
 	FaceInstance: FaceInstance;
 	FacialAnimationStreamingServiceStats: FacialAnimationStreamingServiceStats;
 	FacialAnimationStreamingSubsessionStats: FacialAnimationStreamingSubsessionStats;
@@ -573,6 +574,7 @@ interface Instances extends Services, CreatableInstances {
 	MetaBreakpointContext: MetaBreakpointContext;
 	Mouse: Mouse;
 	NetworkMarker: NetworkMarker;
+	Object: Object;
 	OpenCloudApiV1: OpenCloudApiV1;
 	OrderedDataStore: OrderedDataStore;
 	OutfitPages: OutfitPages;
@@ -595,6 +597,7 @@ interface Instances extends Services, CreatableInstances {
 	PostEffect: PostEffect;
 	PVAdornment: PVAdornment;
 	PVInstance: PVInstance;
+	RobloxSerializableInstance: RobloxSerializableInstance;
 	RootImportData: RootImportData;
 	ScreenshotHud: ScreenshotHud;
 	ScriptBuilder: ScriptBuilder;
@@ -643,11 +646,171 @@ interface Instances extends Services, CreatableInstances {
 
 // GENERATED ROBLOX INSTANCE CLASSES
 
+interface Object {
+	/**
+	 * **DO NOT USE!**
+	 *
+	 * This field exists to force TypeScript to recognize this as a nominal type
+	 * @hidden
+	 * @deprecated
+	 */
+	readonly _nominal_Object: unique symbol;
+	/**
+	 * Tags: NotReplicated
+	 */
+	readonly ClassName: string;
+	GetPropertyChangedSignal<T extends Instance>(
+		this: T,
+		propertyName: InstancePropertyNames<T>,
+	): RBXScriptSignal<() => void>;
+	/**
+	 * Tags: CustomLuaState
+	 */
+	IsA<T extends keyof Instances>(this: Instance, className: T): this is Instances[T];
+	readonly Changed: unknown;
+}
+
+interface EditableImage extends Object {
+	/**
+	 * **DO NOT USE!**
+	 *
+	 * This field exists to force TypeScript to recognize this as a nominal type
+	 * @hidden
+	 * @deprecated
+	 */
+	readonly _nominal_EditableImage: unique symbol;
+	ReadPixels(this: EditableImage, position: Vector2, size: Vector2): Array<number>;
+	/**
+	 * Tags: NotReplicated
+	 */
+	readonly Size: Vector2;
+	Destroy(this: EditableImage): void;
+	DrawCircle(this: EditableImage, center: Vector2, radius: number, color: Color3, transparency: number, combineType: CastsToEnum<Enum.ImageCombineType>): void;
+	DrawImage(this: EditableImage, position: Vector2, image: EditableImage, combineType: CastsToEnum<Enum.ImageCombineType>): void;
+	DrawImageProjected(this: EditableImage, mesh: EditableMesh, projection: object, brushConfig: object): void;
+	DrawImageTransformed(this: EditableImage, position: Vector2, scale: Vector2, rotation: number, image: EditableImage, options: object | undefined): void;
+	DrawLine(this: EditableImage, p1: Vector2, p2: Vector2, color: Color3, transparency: number, combineType: CastsToEnum<Enum.ImageCombineType>): void;
+	DrawRectangle(this: EditableImage, position: Vector2, size: Vector2, color: Color3, transparency: number, combineType: CastsToEnum<Enum.ImageCombineType>): void;
+	/**
+	 * Tags: CustomLuaState
+	 */
+	ReadPixelsBuffer(this: EditableImage, position: Vector2, size: Vector2): buffer;
+	/**
+	 * Tags: CustomLuaState
+	 */
+	WritePixelsBuffer(this: EditableImage, position: Vector2, size: Vector2, buffer: buffer): void;
+}
+
+interface EditableMesh extends Object {
+	/**
+	 * **DO NOT USE!**
+	 *
+	 * This field exists to force TypeScript to recognize this as a nominal type
+	 * @hidden
+	 * @deprecated
+	 */
+	readonly _nominal_EditableMesh: unique symbol;
+	GetAdjacentTriangles(this: EditableMesh, triangleId: number): Array<number>;
+	GetTriangleVertices(this: EditableMesh, triangleId: number): LuaTuple<[number, number, number]>;
+	GetTriangles(this: EditableMesh): Array<number>;
+	/**
+	 * Tags: NotReplicated
+	 */
+	readonly FixedSize: boolean;
+	SkinningEnabled: boolean;
+	AddColor(this: EditableMesh, color: Color3, alpha: number): number;
+	AddNormal(this: EditableMesh, normal: Vector3 | undefined): number;
+	AddTriangle(this: EditableMesh, vertexId0: number, vertexId1: number, vertexId2: number): number;
+	AddUV(this: EditableMesh, uv: Vector2): number;
+	AddVertex(this: EditableMesh, p: Vector3): number;
+	Destroy(this: EditableMesh): void;
+	FindClosestPointOnSurface(this: EditableMesh, point: Vector3): LuaTuple<[number, Vector3, Vector3]>;
+	FindClosestVertex(this: EditableMesh, toThisPoint: Vector3): number;
+	FindVerticesWithinSphere(this: EditableMesh, center: Vector3, radius: number): Array<number>;
+	GetAdjacentFaces(this: EditableMesh, faceId: number): unknown;
+	GetAdjacentVertices(this: EditableMesh, vertexId: number): Array<number>;
+	GetCenter(this: EditableMesh): Vector3;
+	GetColor(this: EditableMesh, colorId: number): Color3 | undefined;
+	GetColorAlpha(this: EditableMesh, colorId: number): number | undefined;
+	/**
+	 * Tags: CustomLuaState
+	 */
+	GetColors(this: EditableMesh): unknown;
+	/**
+	 * Tags: CustomLuaState
+	 */
+	GetFaceColors(this: EditableMesh, faceId: number): unknown;
+	/**
+	 * Tags: CustomLuaState
+	 */
+	GetFaceNormals(this: EditableMesh, faceId: number): unknown;
+	/**
+	 * Tags: CustomLuaState
+	 */
+	GetFaceUVs(this: EditableMesh, faceId: number): unknown;
+	/**
+	 * Tags: CustomLuaState
+	 */
+	GetFaceVertices(this: EditableMesh, faceId: number): unknown;
+	/**
+	 * Tags: CustomLuaState
+	 */
+	GetFaces(this: EditableMesh): unknown;
+	GetFacesWithAttribute(this: EditableMesh, id: number): unknown;
+	GetNormal(this: EditableMesh, normalId: number): Vector3 | undefined;
+	/**
+	 * Tags: CustomLuaState
+	 */
+	GetNormals(this: EditableMesh): unknown;
+	GetPosition(this: EditableMesh, vertexId: number): Vector3;
+	GetSize(this: EditableMesh): Vector3;
+	GetUV(this: EditableMesh, uvId: number): Vector2 | undefined;
+	/**
+	 * Tags: CustomLuaState
+	 */
+	GetUVs(this: EditableMesh): unknown;
+	GetVertices(this: EditableMesh): Array<number>;
+	GetVerticesWithAttribute(this: EditableMesh, id: number): unknown;
+	IdDebugString(this: EditableMesh, id: number): string;
+	MergeVertices(this: EditableMesh, mergeTolerance: number): object;
+	RaycastLocal(this: EditableMesh, origin: Vector3, direction: Vector3): LuaTuple<[number, Vector3, Vector3]>;
+	RemoveFace(this: EditableMesh, faceId: number): void;
+	RemoveUnused(this: EditableMesh): unknown;
+	ResetNormal(this: EditableMesh, normalId: number): void;
+	SetColor(this: EditableMesh, colorId: number, color: Color3): void;
+	SetColorAlpha(this: EditableMesh, colorId: number, alpha: number): void;
+	/**
+	 * Tags: CustomLuaState
+	 */
+	SetFaceColors(this: EditableMesh, faceId: number, ids: Array<any>): void;
+	/**
+	 * Tags: CustomLuaState
+	 */
+	SetFaceNormals(this: EditableMesh, faceId: number, ids: Array<any>): void;
+	/**
+	 * Tags: CustomLuaState
+	 */
+	SetFaceUVs(this: EditableMesh, faceId: number, ids: Array<any>): void;
+	/**
+	 * Tags: CustomLuaState
+	 */
+	SetFaceVertices(this: EditableMesh, faceId: number, ids: Array<any>): void;
+	SetNormal(this: EditableMesh, normalId: number, normal: Vector3): void;
+	SetPosition(this: EditableMesh, vertexId: number, p: Vector3): void;
+	SetUV(this: EditableMesh, uvId: number, uv: Vector2): void;
+	Triangulate(this: EditableMesh): void;
+	/**
+	 * Tags: Yields
+	 * @deprecated
+	 */
+	CreateMeshPartAsync(this: EditableMesh, initialSize: Vector3, options?: object): MeshPart;
+}
+
 /** Instance is the base class for all classes in the Roblox class hierarchy. Every other class that the Roblox engine defines inherits all of the members of Instance. It is not possible to directly create Instance objects.
  * 
  * Instance has a special function called `Instance.new` which is used to create objects via code. This function takes the name of the class as a parameter and returns the created object. Abstract classes and services cannot be created with the Instance.new function.
  */
-interface Instance {
+interface Instance extends Object {
 	/**
 	 * **DO NOT USE!**
 	 *
@@ -656,6 +819,19 @@ interface Instance {
 	 * @deprecated
 	 */
 	readonly _nominal_Instance: unique symbol;
+	/** `Instance.Changed` has been intentionally excluded from the roblox-ts type system to maintain soundness with the ValueBase objects.
+	 * Please intersect your type with the `ChangedSignal` global type to unsafely access the `Instance.Changed` event.
+	 * @example
+	 * function f(p: Part) {
+	 * 	(p as Part & ChangedSignal).Changed.Connect(changedPropertyName => {})
+	 * }
+	 */
+	readonly Changed: unknown;
+	IsA<T extends keyof Instances>(this: Instance, className: T): this is Instances[T];
+	GetPropertyChangedSignal<T extends Instance>(
+		this: T,
+		propertyName: InstancePropertyNames<T>,
+	): RBXScriptSignal<() => void>;
 	/**
 	 * This property determines whether an [object](https://developer.roblox.com/en-us/api-reference/class/Instance) should be included when the game is published or saved, or when [Instance:Clone](https://developer.roblox.com/en-us/api-reference/function/Instance/Clone) is called on one of the object's ancestors. Calling Clone directly on an object will return nil if the cloned object is not archivable. Copying an object in Studio (using the 'Duplicate' or 'Copy' options) will ignore the Archivable property and set Archivable to true for the copy.
 	 * 
@@ -665,25 +841,6 @@ interface Instance {
 	 * print(part:Clone()) --&gt; nil
 	 */
 	Archivable: boolean;
-	/**
-	 * A read-only string representing the class this [Instance](https://developer.roblox.com/en-us/api-reference/class/Instance) belongs to.
-	 * 
-	 * This property can be used with various other functions of Instance that are used to identify objects by type, such as [Instance:IsA](https://developer.roblox.com/en-us/api-reference/function/Instance/IsA) or [Instance:FindFirstChildOfClass](https://developer.roblox.com/en-us/api-reference/function/Instance/FindFirstChildOfClass).
-	 * 
-	 * Note this property is read only and cannot be altered by scripts. Developers wishing to change an [Instance](https://developer.roblox.com/en-us/api-reference/class/Instance)'s class will instead have to create a new [Instance](https://developer.roblox.com/en-us/api-reference/class/Instance).
-	 * 
-	 * Unlike [Instance:IsA](https://developer.roblox.com/en-us/api-reference/function/Instance/IsA), ClassName can be used to check if an object belongs to a specific class ignoring class inheritance. For example:
-	 * 
-	 * for \_, child in ipairs(game.Workspace:GetChildren()) do
-	 *     if child.ClassName == "Part" then
-	 *         print("Found a Part")
-	 *         -- will find Parts in model, but NOT TrussParts, WedgeParts, etc
-	 *     end
-	 * end
-	 * 
-	 * Tags: NotReplicated
-	 */
-	readonly ClassName: string;
 	/**
 	 * A non-unique identifier of the [Instance](https://developer.roblox.com/en-us/api-reference/class/Instance).
 	 * 
@@ -1033,42 +1190,9 @@ interface Instance {
 	 * This function is useful for logging and debugging. You shouldn't attempt to parse the returned string for any useful operation; this function does not escape periods (or any other symbol) in object names. In other words, although its output often appears to be a valid Lua identifier, it is not guaranteed.
 	 */
 	GetFullName(this: Instance): string;
-	/**
-	 * This method returns an event that behaves exactly like the `Changed` event, except that the event only fires when the given property changes. It's generally a good idea to use this method instead of a connection to `Changed` with a function that checks the property name. Subsequent calls to this method on the same object with the same property name return the same event.
-	 * 
-	 * `print(object:GetPropertyChangedSignal("Name") == object:GetPropertyChangedSignal("Name")) --&gt; always true`
-	 * 
-	 * [ValueBase](https://developer.roblox.com/en-us/api-reference/class/ValueBase) objects, such as [IntValue](https://developer.roblox.com/en-us/api-reference/class/IntValue) and [StringValue](https://developer.roblox.com/en-us/api-reference/class/StringValue), use a modified `Changed` event that fires with the contents of the `Value` property. As such, this method provides a way to detect changes in other properties of those objects. For example, to detect changes in the `Name` property of an [IntValue](https://developer.roblox.com/en-us/api-reference/class/IntValue), use `IntValue:GetPropertyChangedSignal("Name"):Connect(someFunc)` since the `Changed` event of [IntValue](https://developer.roblox.com/en-us/api-reference/class/IntValue) objects only detect changes on the `Value` property.
-	 */
-	GetPropertyChangedSignal<T extends Instance>(
-		this: T,
-		propertyName: InstancePropertyNames<T>,
-	): RBXScriptSignal<() => void>;
 	GetStyled(this: Instance, name: string): unknown;
 	GetTags(this: Instance): Array<string>;
 	HasTag(this: Instance, tag: string): boolean;
-	/**
-	 * IsA returns true if the [Instance](https://developer.roblox.com/en-us/api-reference/class/Instance)'s class is **equivalent to** or a **subclass** of a given class. This function is similar to the **instanceof** operators in other languages, and is a form of [type introspection](https://en.wikipedia.org/wiki/Type_introspection). To ignore class inheritance, test the [ClassName](https://developer.roblox.com/en-us/api-reference/property/Instance/ClassName) property directly instead. For checking native Lua data types (number, string, etc) use the functions `type` and `typeof`.
-	 * 
-	 * Most commonly, this function is used to test if an object is some kind of part, such as [Part](https://developer.roblox.com/en-us/api-reference/class/Part) or [WedgePart](https://developer.roblox.com/en-us/api-reference/class/WedgePart), which inherits from [BasePart](https://developer.roblox.com/en-us/api-reference/class/BasePart) (an abstract class). For example, if your goal is to change all of a [Character](https://developer.roblox.com/en-us/api-reference/property/Player/Character)'s limbs to the same color, you might use [GetChildren](https://developer.roblox.com/en-us/api-reference/function/Instance/GetChildren) to iterate over the children, then use IsA to filter non-[BasePart](https://developer.roblox.com/en-us/api-reference/class/BasePart) objects which lack the `BrickColor` property:
-	 * 
-	 * local function paintFigure(character, color)
-	 * 	-- Iterate over the child objects of the character
-	 * 	for \_, child in pairs(character:GetChildren()) do
-	 * 		-- Filter out non-part objects, such as Shirt, Pants and Humanoid
-	 * 		-- R15 use MeshPart and R6 use Part, so we use BasePart here to detect both:
-	 * 		if child:IsA("BasePart") then
-	 * 			child.BrickColor = color
-	 * 		end
-	 * 	end
-	 * end
-	 * paintFigure(game.Players.Player.Character, BrickColor.new("Bright blue"))
-	 * 
-	 * Since all classes inherit from [Instance](https://developer.roblox.com/en-us/api-reference/class/Instance), calling `object:IsA("Instance")` will always return true.
-	 * 
-	 * Tags: CustomLuaState
-	 */
-	IsA<T extends keyof Instances>(this: Instance, className: T): this is Instances[T];
 	/**
 	 * Returns true if an [Instance](https://developer.roblox.com/en-us/api-reference/class/Instance) is an ancestor of the given descendant.
 	 * 
@@ -1188,16 +1312,6 @@ interface Instance {
 	 * *   [Instance:GetAttributeChangedSignal](https://developer.roblox.com/en-us/api-reference/function/Instance/GetAttributeChangedSignal), returns an event that fires when the given attribute changes
 	 */
 	readonly AttributeChanged: RBXScriptSignal<(attribute: string) => void>;
-	/**
-	 * The Changed event fires right after most properties change on objects. It is possible to find the present value of a changed property by using `object[property]`. To get the value of a property before it changes, you must have stored the value of the property before it changed.
-	 * 
-	 * If you are only interested in listening to the change of a specific property, consider using the `GetPropertyChangedSignal` method instead to get an event that only fires when a given property changes.
-	 * 
-	 * This event does not fire for physics-related changes, like when the `CFrame`, `Velocity`, `RotVelocity`, `Position`, `Orientation` and `CFrame` properties of a [BasePart](https://developer.roblox.com/en-us/api-reference/class/BasePart) change due to gravity. To detect changes in these properties, consider using a physics-based event like `RunService.Stepped` or `BasePart.Touched`. A while-true-do loop can also work.
-	 * 
-	 * For “-Value” objects, this event behaves differently: it only fires when the `Value` property changes. See individual pages for [IntValue](https://developer.roblox.com/en-us/api-reference/class/IntValue), [StringValue](https://developer.roblox.com/en-us/api-reference/class/StringValue), etc for more information. To detect other changes in these objects, you must use `GetPropertyChangedSignal` instead.
-	 */
-	readonly Changed: unknown;
 	/**
 	 * Fires after an object is parented to this [Instance](https://developer.roblox.com/en-us/api-reference/class/Instance).
 	 * 
@@ -2429,18 +2543,25 @@ interface AssetService extends Instance {
 	 * @deprecated
 	 */
 	readonly _nominal_AssetService: unique symbol;
+	CreateEditableImage(this: AssetService, editableImageOptions: object | undefined): EditableImage;
+	CreateEditableMesh(this: AssetService, editableMeshOptions: object | undefined): EditableMesh;
 	/**
 	 * Tags: Yields
 	 */
-	CreateEditableImageAsync(this: AssetService, textureId: ContentId): EditableImage;
+	CreateEditableImageAsync(this: AssetService, content: string, editableImageOptions: object | undefined): EditableImage;
 	/**
 	 * Tags: Yields
 	 */
-	CreateEditableMeshAsync(this: AssetService, meshId: ContentId): EditableMesh;
+	CreateEditableMeshAsync(this: AssetService, content: string, editableMeshOptions: object | undefined): EditableMesh;
 	/**
 	 * Tags: Yields
+	 * @deprecated Use `CreateEditableMeshAsync` instead
 	 */
 	CreateEditableMeshFromPartAsync(this: AssetService, meshPart: MeshPart): EditableMesh;
+	/**
+	 * Tags: Yields
+	 */
+	CreateMeshPartAsync(this: AssetService, meshContent: string, options?: object): MeshPart;
 	/**
 	 * Clones a place with placeId equal to given templatePlaceId. It is placed into the inventory of the place's creator with the given name and description. This method will also return the placeId of the new place, which can be used with TeleportService. This method cannot be used to clone places that you do not own.
 	 * 
@@ -2781,7 +2902,7 @@ interface Attachment extends Instance {
 	 * @deprecated Use `Axis` instead
 	 */
 	GetAxis(this: Attachment): Vector3;
-	GetConstraints(this: Attachment): Array<Instance>;
+	GetConstraints(this: Attachment): Instances;
 	/**
 	 * Returns the value of the Attachment's [Attachment.SecondaryAxis](https://developer.roblox.com/en-us/api-reference/property/Attachment/SecondaryAxis).
 	 * @deprecated Use `SecondaryAxis` instead
@@ -2864,7 +2985,7 @@ interface AudioAnalyzer extends Instance {
 	 */
 	readonly RmsLevel: number;
 	SpectrumEnabled: boolean;
-	GetConnectedWires(this: AudioAnalyzer, pin: string): Array<Instance>;
+	GetConnectedWires(this: AudioAnalyzer, pin: string): Instances;
 	/**
 	 * Tags: CustomLuaState
 	 */
@@ -2884,7 +3005,7 @@ interface AudioChorus extends Instance {
 	Depth: number;
 	Mix: number;
 	Rate: number;
-	GetConnectedWires(this: AudioChorus, pin: string): Array<Instance>;
+	GetConnectedWires(this: AudioChorus, pin: string): Instances;
 }
 
 interface AudioCompressor extends Instance {
@@ -2902,7 +3023,7 @@ interface AudioCompressor extends Instance {
 	Ratio: number;
 	Release: number;
 	Threshold: number;
-	GetConnectedWires(this: AudioCompressor, pin: string): Array<Instance>;
+	GetConnectedWires(this: AudioCompressor, pin: string): Instances;
 }
 
 interface AudioDeviceInput extends Instance {
@@ -2919,7 +3040,7 @@ interface AudioDeviceInput extends Instance {
 	Muted: boolean;
 	Player: Player | undefined;
 	Volume: number;
-	GetConnectedWires(this: AudioDeviceInput, pin: string): Array<Instance>;
+	GetConnectedWires(this: AudioDeviceInput, pin: string): Instances;
 	GetUserIdAccessList(this: AudioDeviceInput): unknown;
 	SetUserIdAccessList(this: AudioDeviceInput, userIds: Array<any>): void;
 }
@@ -2934,7 +3055,7 @@ interface AudioDeviceOutput extends Instance {
 	 */
 	readonly _nominal_AudioDeviceOutput: unique symbol;
 	Player: Player | undefined;
-	GetConnectedWires(this: AudioDeviceOutput, pin: string): Array<Instance>;
+	GetConnectedWires(this: AudioDeviceOutput, pin: string): Instances;
 }
 
 interface AudioDistortion extends Instance {
@@ -2948,7 +3069,7 @@ interface AudioDistortion extends Instance {
 	readonly _nominal_AudioDistortion: unique symbol;
 	Bypass: boolean;
 	Level: number;
-	GetConnectedWires(this: AudioDistortion, pin: string): Array<Instance>;
+	GetConnectedWires(this: AudioDistortion, pin: string): Instances;
 }
 
 interface AudioEcho extends Instance {
@@ -2964,8 +3085,9 @@ interface AudioEcho extends Instance {
 	DelayTime: number;
 	DryLevel: number;
 	Feedback: number;
+	RampTime: number;
 	WetLevel: number;
-	GetConnectedWires(this: AudioEcho, pin: string): Array<Instance>;
+	GetConnectedWires(this: AudioEcho, pin: string): Instances;
 }
 
 interface AudioEmitter extends Instance {
@@ -2978,12 +3100,20 @@ interface AudioEmitter extends Instance {
 	 */
 	readonly _nominal_AudioEmitter: unique symbol;
 	AudioInteractionGroup: string;
-	GetConnectedWires(this: AudioEmitter, pin: string): Array<Instance>;
+	/**
+	 * Tags: CustomLuaState
+	 */
+	GetAngleAttenuation(this: AudioEmitter): object;
+	GetConnectedWires(this: AudioEmitter, pin: string): Instances;
 	/**
 	 * Tags: CustomLuaState
 	 */
 	GetDistanceAttenuation(this: AudioEmitter): object;
-	GetInteractingListeners(this: AudioEmitter): Array<Instance>;
+	GetInteractingListeners(this: AudioEmitter): Instances;
+	/**
+	 * Tags: CustomLuaState
+	 */
+	SetAngleAttenuation(this: AudioEmitter, curve: object): void;
 	/**
 	 * Tags: CustomLuaState
 	 */
@@ -3004,7 +3134,7 @@ interface AudioEqualizer extends Instance {
 	LowGain: number;
 	MidGain: number;
 	MidRange: NumberRange;
-	GetConnectedWires(this: AudioEqualizer, pin: string): Array<Instance>;
+	GetConnectedWires(this: AudioEqualizer, pin: string): Instances;
 }
 
 interface AudioFader extends Instance {
@@ -3018,7 +3148,7 @@ interface AudioFader extends Instance {
 	readonly _nominal_AudioFader: unique symbol;
 	Bypass: boolean;
 	Volume: number;
-	GetConnectedWires(this: AudioFader, pin: string): Array<Instance>;
+	GetConnectedWires(this: AudioFader, pin: string): Instances;
 }
 
 interface AudioFilter extends Instance {
@@ -3035,7 +3165,7 @@ interface AudioFilter extends Instance {
 	Frequency: number;
 	Gain: number;
 	Q: number;
-	GetConnectedWires(this: AudioFilter, pin: string): Array<Instance>;
+	GetConnectedWires(this: AudioFilter, pin: string): Instances;
 	GetGainAt(this: AudioFilter, frequency: number): number;
 }
 
@@ -3052,7 +3182,7 @@ interface AudioFlanger extends Instance {
 	Depth: number;
 	Mix: number;
 	Rate: number;
-	GetConnectedWires(this: AudioFlanger, pin: string): Array<Instance>;
+	GetConnectedWires(this: AudioFlanger, pin: string): Instances;
 }
 
 interface AudioFocusService extends Instance {
@@ -3078,7 +3208,7 @@ interface AudioLimiter extends Instance {
 	Bypass: boolean;
 	MaxLevel: number;
 	Release: number;
-	GetConnectedWires(this: AudioLimiter, pin: string): Array<Instance>;
+	GetConnectedWires(this: AudioLimiter, pin: string): Instances;
 }
 
 interface AudioListener extends Instance {
@@ -3091,12 +3221,20 @@ interface AudioListener extends Instance {
 	 */
 	readonly _nominal_AudioListener: unique symbol;
 	AudioInteractionGroup: string;
-	GetConnectedWires(this: AudioListener, pin: string): Array<Instance>;
+	/**
+	 * Tags: CustomLuaState
+	 */
+	GetAngleAttenuation(this: AudioListener): object;
+	GetConnectedWires(this: AudioListener, pin: string): Instances;
 	/**
 	 * Tags: CustomLuaState
 	 */
 	GetDistanceAttenuation(this: AudioListener): object;
-	GetInteractingEmitters(this: AudioListener): Array<Instance>;
+	GetInteractingEmitters(this: AudioListener): Instances;
+	/**
+	 * Tags: CustomLuaState
+	 */
+	SetAngleAttenuation(this: AudioListener, curve: object): void;
 	/**
 	 * Tags: CustomLuaState
 	 */
@@ -3114,7 +3252,7 @@ interface AudioPitchShifter extends Instance {
 	readonly _nominal_AudioPitchShifter: unique symbol;
 	Bypass: boolean;
 	Pitch: number;
-	GetConnectedWires(this: AudioPitchShifter, pin: string): Array<Instance>;
+	GetConnectedWires(this: AudioPitchShifter, pin: string): Instances;
 }
 
 interface AudioPlayer extends Instance {
@@ -3143,9 +3281,13 @@ interface AudioPlayer extends Instance {
 	readonly TimeLength: number;
 	TimePosition: number;
 	Volume: number;
-	GetConnectedWires(this: AudioPlayer, pin: string): Array<Instance>;
+	GetConnectedWires(this: AudioPlayer, pin: string): Instances;
 	Play(this: AudioPlayer): void;
 	Stop(this: AudioPlayer): void;
+	/**
+	 * Tags: Yields
+	 */
+	GetWaveformAsync(this: AudioPlayer, timeRange: NumberRange, samples: number): unknown;
 	readonly Ended: RBXScriptSignal<() => void>;
 	readonly Looped: RBXScriptSignal<() => void>;
 }
@@ -3172,7 +3314,7 @@ interface AudioReverb extends Instance {
 	LowShelfGain: number;
 	ReferenceFrequency: number;
 	WetLevel: number;
-	GetConnectedWires(this: AudioReverb, pin: string): Array<Instance>;
+	GetConnectedWires(this: AudioReverb, pin: string): Instances;
 }
 
 interface AudioSearchParams extends Instance {
@@ -3263,7 +3405,7 @@ interface AvatarCreationService extends Instance {
 	/**
 	 * Tags: Yields
 	 */
-	PromptCreateAvatarAsync(this: AvatarCreationService, player: Player, humanoidDescription: HumanoidDescription): unknown;
+	PromptCreateAvatarAsync(this: AvatarCreationService, tokenId: string, player: Player, humanoidDescription: HumanoidDescription): unknown;
 	/**
 	 * Tags: Yields
 	 */
@@ -5075,6 +5217,10 @@ interface BaseWrap extends Instance {
 	 */
 	readonly _nominal_BaseWrap: unique symbol;
 	/**
+	 * Tags: Hidden
+	 */
+	CageMeshContent: string;
+	/**
 	 * This property is set up automatically by the Avatar Importer plugin.
 	 * 
 	 * Asset ID for cage mesh.
@@ -5147,11 +5293,15 @@ interface WrapDeformer extends BaseWrap {
 	 * @deprecated
 	 */
 	readonly _nominal_WrapDeformer: unique symbol;
-	GetDeformedCFrame(this: WrapDeformer, originalCFrame: CFrame): CFrame;
+	SetCageMeshContent(this: WrapDeformer, content: string): void;
 	/**
 	 * Tags: Yields
 	 */
 	CreateEditableMeshAsync(this: WrapDeformer): EditableMesh;
+	/**
+	 * Tags: Yields
+	 */
+	GetDeformedCFrameAsync(this: WrapDeformer, originalCFrame: CFrame): CFrame;
 }
 
 /** The WrapLayer object defines a 3D accessory's inner and outer surfaces and other properties related to layering accessories. These surfaces, or the Inner Cage and Outer Cage, are similar to collision boxes, and describe the surfaces of which other 3D accessories can be placed without clipping or breaking.
@@ -5188,6 +5338,10 @@ interface WrapLayer extends BaseWrap {
 	 * Valid range is 0 to 1. A value of 0 makes the clothing item always fit the body regardless of how many clothing layers are under it (all underlying clothing layers will be compressed). A value of 1 (default) never compresses anything and infinitely inflates over underlying clothing items.
 	 */
 	Puffiness: number;
+	/**
+	 * Tags: Hidden
+	 */
+	ReferenceMeshContent: string;
 	/**
 	 * AssetID for reference mesh used to define Inner Cage of a 3D object
 	 * 
@@ -6635,7 +6789,7 @@ interface Camera extends Instance {
 	 * Note, as this function requires an _ignoreList_ to run, you should pass an empty table when none is required.
 	 * @deprecated
 	 */
-	GetLargestCutoffDistance(this: Camera, ignoreList: Array<Instance>): number;
+	GetLargestCutoffDistance(this: Camera, ignoreList: Instances): number;
 	/**
 	 * This function is broken and should not be used
 	 * 
@@ -7789,13 +7943,17 @@ interface CommerceService extends Instance {
 	 * @deprecated
 	 */
 	readonly _nominal_CommerceService: unique symbol;
-	PromptCommerceProductPurchase(this: CommerceService, user: Player, commerceProductId: number): void;
+	PromptCommerceProductPurchase(this: CommerceService, user: Player, commerceProductId: string): void;
 	PromptRealWorldCommerceBrowser(this: CommerceService, player: Player, url: string): void;
 	/**
 	 * Tags: Yields
 	 */
+	GetCommerceProductInfoAsync(this: CommerceService, commerceProductId: string): object;
+	/**
+	 * Tags: Yields
+	 */
 	UserEligibleForRealWorldCommerceAsync(this: CommerceService): boolean;
-	readonly PromptCommerceProductPurchaseFinished: RBXScriptSignal<(user: Player, productId: number) => void>;
+	readonly PromptCommerceProductPurchaseFinished: RBXScriptSignal<(user: Player, productId: string) => void>;
 }
 
 /** The Configuration object is a container object that is designed to hold value objects to make values used in [Tool](https://developer.roblox.com/en-us/api-reference/class/Tool)s or any model using [Script](https://developer.roblox.com/en-us/api-reference/class/Script)s more accessible.
@@ -9989,155 +10147,6 @@ interface CylinderMesh extends BevelMesh {
 	readonly _nominal_CylinderMesh: unique symbol;
 }
 
-interface EditableMesh extends DataModelMesh {
-	/**
-	 * **DO NOT USE!**
-	 *
-	 * This field exists to force TypeScript to recognize this as a nominal type
-	 * @hidden
-	 * @deprecated
-	 */
-	readonly _nominal_EditableMesh: unique symbol;
-	SkinningEnabled: boolean;
-	AddColor(this: EditableMesh, color: Color3, alpha: number): number;
-	AddNormal(this: EditableMesh, normal: Vector3 | undefined): number;
-	AddTriangle(this: EditableMesh, vertexId0: number, vertexId1: number, vertexId2: number): number;
-	AddUV(this: EditableMesh, uv: Vector2): number;
-	AddVertex(this: EditableMesh, p: Vector3): number;
-	FindClosestPointOnSurface(this: EditableMesh, point: Vector3): LuaTuple<[number, Vector3, Vector3]>;
-	FindClosestVertex(this: EditableMesh, toThisPoint: Vector3): number;
-	FindVerticesWithinSphere(this: EditableMesh, center: Vector3, radius: number): Array<number>;
-	GetAdjacentFaces(this: EditableMesh, faceId: number): unknown;
-	/**
-	 * @deprecated
-	 */
-	GetAdjacentTriangles(this: EditableMesh, triangleId: number): Array<number>;
-	GetAdjacentVertices(this: EditableMesh, vertexId: number): Array<number>;
-	GetColor(this: EditableMesh, colorId: number): Color3 | undefined;
-	GetColorAlpha(this: EditableMesh, colorId: number): number | undefined;
-	/**
-	 * Tags: CustomLuaState
-	 */
-	GetColors(this: EditableMesh): unknown;
-	/**
-	 * Tags: CustomLuaState
-	 */
-	GetFaceColors(this: EditableMesh, faceId: number): unknown;
-	/**
-	 * Tags: CustomLuaState
-	 */
-	GetFaceNormals(this: EditableMesh, faceId: number): unknown;
-	/**
-	 * Tags: CustomLuaState
-	 */
-	GetFaceUVs(this: EditableMesh, faceId: number): unknown;
-	/**
-	 * Tags: CustomLuaState
-	 */
-	GetFaceVertices(this: EditableMesh, faceId: number): unknown;
-	/**
-	 * Tags: CustomLuaState
-	 */
-	GetFaces(this: EditableMesh): unknown;
-	GetFacesWithAttribute(this: EditableMesh, id: number): unknown;
-	GetNormal(this: EditableMesh, normalId: number): Vector3 | undefined;
-	/**
-	 * Tags: CustomLuaState
-	 */
-	GetNormals(this: EditableMesh): unknown;
-	GetPosition(this: EditableMesh, vertexId: number): Vector3;
-	/**
-	 * @deprecated
-	 */
-	GetTriangleVertices(this: EditableMesh, triangleId: number): LuaTuple<[number, number, number]>;
-	/**
-	 * @deprecated
-	 */
-	GetTriangles(this: EditableMesh): Array<number>;
-	GetUV(this: EditableMesh, uvId: number): Vector2 | undefined;
-	/**
-	 * Tags: CustomLuaState
-	 */
-	GetUVs(this: EditableMesh): unknown;
-	/**
-	 * @deprecated
-	 */
-	GetVertexColor(this: EditableMesh, vertexId: number): Color3;
-	/**
-	 * @deprecated
-	 */
-	GetVertexColorAlpha(this: EditableMesh, vertexId: number): number;
-	/**
-	 * @deprecated
-	 */
-	GetVertexNormal(this: EditableMesh, vertexId: number): Vector3;
-	GetVertices(this: EditableMesh): Array<number>;
-	GetVerticesWithAttribute(this: EditableMesh, id: number): unknown;
-	IdDebugString(this: EditableMesh, id: number): string;
-	MergeVertices(this: EditableMesh, mergeTolerance: number): object;
-	RaycastLocal(this: EditableMesh, origin: Vector3, direction: Vector3): LuaTuple<[number, Vector3, Vector3]>;
-	RemoveFace(this: EditableMesh, faceId: number): void;
-	/**
-	 * @deprecated
-	 */
-	RemoveTriangle(this: EditableMesh, triangleId: number): void;
-	RemoveUnused(this: EditableMesh): unknown;
-	/**
-	 * @deprecated
-	 */
-	RemoveVertex(this: EditableMesh, vertexId: number): void;
-	ResetNormal(this: EditableMesh, normalId: number): void;
-	SetColor(this: EditableMesh, colorId: number, color: Color3): void;
-	SetColorAlpha(this: EditableMesh, colorId: number, alpha: number): void;
-	/**
-	 * Tags: CustomLuaState
-	 */
-	SetFaceColors(this: EditableMesh, faceId: number, ids: Array<any>): void;
-	/**
-	 * Tags: CustomLuaState
-	 */
-	SetFaceNormals(this: EditableMesh, faceId: number, ids: Array<any>): void;
-	/**
-	 * Tags: CustomLuaState
-	 */
-	SetFaceUVs(this: EditableMesh, faceId: number, ids: Array<any>): void;
-	/**
-	 * Tags: CustomLuaState
-	 */
-	SetFaceVertices(this: EditableMesh, faceId: number, ids: Array<any>): void;
-	SetNormal(this: EditableMesh, normalId: number, normal: Vector3): void;
-	SetPosition(this: EditableMesh, vertexId: number, p: Vector3): void;
-	SetUV(this: EditableMesh, uvId: number, uv: Vector2): void;
-	/**
-	 * @deprecated
-	 */
-	SetVertexColor(this: EditableMesh, vertexId: number, color: Color3): void;
-	/**
-	 * @deprecated
-	 */
-	SetVertexColorAlpha(this: EditableMesh, vertexId: number, alpha: number): void;
-	/**
-	 * @deprecated
-	 */
-	SetVertexNormal(this: EditableMesh, vertexId: number, vnormal: Vector3): void;
-	Triangulate(this: EditableMesh): void;
-	/**
-	 * Tags: Yields
-	 */
-	CreateMeshPartAsync(this: EditableMesh, options?: object): MeshPart;
-}
-
-interface RobloxEditableMesh extends EditableMesh {
-	/**
-	 * **DO NOT USE!**
-	 *
-	 * This field exists to force TypeScript to recognize this as a nominal type
-	 * @hidden
-	 * @deprecated
-	 */
-	readonly _nominal_RobloxEditableMesh: unique symbol;
-}
-
 /** The FileMesh object applies a textured mesh to a [BasePart](https://developer.roblox.com/en-us/api-reference/class/BasePart) when parented to it. Its properties are inherited by the [SpecialMesh](https://developer.roblox.com/en-us/api-reference/class/SpecialMesh) object.
  * 
  * What is a FileMesh?
@@ -11029,54 +11038,6 @@ interface DraggerService extends Instance {
 	ShowPivotIndicator: boolean;
 }
 
-interface EditableImage extends Instance {
-	/**
-	 * **DO NOT USE!**
-	 *
-	 * This field exists to force TypeScript to recognize this as a nominal type
-	 * @hidden
-	 * @deprecated
-	 */
-	readonly _nominal_EditableImage: unique symbol;
-	Size: Vector2;
-	Copy(this: EditableImage, min: Vector2, max: Vector2): EditableImage;
-	Crop(this: EditableImage, min: Vector2, max: Vector2): void;
-	DrawCircle(this: EditableImage, center: Vector2, radius: number, color: Color3, transparency: number, combineType: CastsToEnum<Enum.ImageCombineType>): void;
-	DrawImage(this: EditableImage, position: Vector2, image: EditableImage, combineType: CastsToEnum<Enum.ImageCombineType>): void;
-	DrawLine(this: EditableImage, p1: Vector2, p2: Vector2, color: Color3, transparency: number, combineType: CastsToEnum<Enum.ImageCombineType>): void;
-	DrawProjectionImage(this: EditableImage, mesh: EditableMesh, projection: object, brushConfig: object): void;
-	DrawRectangle(this: EditableImage, position: Vector2, size: Vector2, color: Color3, transparency: number, combineType: CastsToEnum<Enum.ImageCombineType>): void;
-	/**
-	 * Tags: CustomLuaState
-	 */
-	ReadPixels(this: EditableImage, position: Vector2, size: Vector2): Array<number>;
-	/**
-	 * Tags: CustomLuaState
-	 */
-	ReadPixelsBuffer(this: EditableImage, position: Vector2, size: Vector2): buffer;
-	Resize(this: EditableImage, size: Vector2): void;
-	Rotate(this: EditableImage, degrees: number, changeSize: boolean): void;
-	/**
-	 * Tags: CustomLuaState
-	 */
-	WritePixels(this: EditableImage, position: Vector2, size: Vector2, pixels: Array<any>): void;
-	/**
-	 * Tags: CustomLuaState
-	 */
-	WritePixelsBuffer(this: EditableImage, position: Vector2, size: Vector2, buffer: buffer): void;
-}
-
-interface RobloxEditableImage extends EditableImage {
-	/**
-	 * **DO NOT USE!**
-	 *
-	 * This field exists to force TypeScript to recognize this as a nominal type
-	 * @hidden
-	 * @deprecated
-	 */
-	readonly _nominal_RobloxEditableImage: unique symbol;
-}
-
 interface EditableService extends Instance {
 	/**
 	 * **DO NOT USE!**
@@ -11211,7 +11172,7 @@ interface ExperienceStateCaptureService extends Instance {
 	readonly _nominal_ExperienceStateCaptureService: unique symbol;
 }
 
-interface ExplorerFilterAutocompleterInstance extends Instance {
+interface ExplorerFilter extends Instance {
 	/**
 	 * **DO NOT USE!**
 	 *
@@ -11219,19 +11180,10 @@ interface ExplorerFilterAutocompleterInstance extends Instance {
 	 * @hidden
 	 * @deprecated
 	 */
-	readonly _nominal_ExplorerFilterAutocompleterInstance: unique symbol;
-	/**
-	 * Tags: NotReplicated
-	 */
-	readonly ReplaceRange: Vector2;
-	/**
-	 * Tags: NotReplicated
-	 */
-	readonly RequiresOutsideContext: boolean;
-	GetSuggestions(this: ExplorerFilterAutocompleterInstance): unknown;
+	readonly _nominal_ExplorerFilter: unique symbol;
 }
 
-interface ExplorerFilterInstance extends Instance {
+interface ExplorerFilterAutocompleter extends Instance {
 	/**
 	 * **DO NOT USE!**
 	 *
@@ -11239,12 +11191,7 @@ interface ExplorerFilterInstance extends Instance {
 	 * @hidden
 	 * @deprecated
 	 */
-	readonly _nominal_ExplorerFilterInstance: unique symbol;
-	GetAutocompleter(this: ExplorerFilterInstance): ExplorerFilterAutocompleterInstance;
-	GetErrors(this: ExplorerFilterInstance): unknown;
-	GetLexemes(this: ExplorerFilterInstance): unknown;
-	InstancePassesFilter(this: ExplorerFilterInstance, instance: Instance): boolean;
-	SetFilter(this: ExplorerFilterInstance, search: string): void;
+	readonly _nominal_ExplorerFilterAutocompleter: unique symbol;
 }
 
 /** An Explosion applies force to `BaseParts` within the explosion's [Explosion.BlastRadius](https://developer.roblox.com/en-us/api-reference/property/Explosion/BlastRadius). This force breaks joints between parts and kills [Humanoid](https://developer.roblox.com/en-us/api-reference/class/Humanoid) characters not protected by a [ForceField](https://developer.roblox.com/en-us/api-reference/class/ForceField).
@@ -13471,6 +13418,10 @@ interface ImageButton extends GuiButton {
 	 */
 	ImageColor3: Color3;
 	/**
+	 * Tags: Hidden
+	 */
+	ImageContent: string;
+	/**
 	 * Allows the partial display of an image in conjunction with [ImageButton.ImageRectSize](https://developer.roblox.com/en-us/api-reference/property/ImageButton/ImageRectSize). This property determines the pixel offset (from the top-left) of the image area to be displayed.
 	 * 
 	 * This property behaves identically to [ImageLabel.ImageRectSize](https://developer.roblox.com/en-us/api-reference/property/ImageLabel/ImageRectSize).
@@ -13799,6 +13750,10 @@ interface ImageLabel extends GuiLabel {
 	 * The ImageColor3 property determines how an image is colorized. When set to white, no colorization occurs. This property is very useful for reusing image assets: If the source image is completely white with transparency, you can set the entire color of the image at once with this property.
 	 */
 	ImageColor3: Color3;
+	/**
+	 * Tags: Hidden
+	 */
+	ImageContent: string;
 	/**
 	 * Allows the partial display of an image in conjunction with [ImageLabel.ImageRectSize](https://developer.roblox.com/en-us/api-reference/property/ImageLabel/ImageRectSize). This property determines the pixel offset (from the top-left) of the image area to be displayed.
 	 * 
@@ -15095,6 +15050,8 @@ interface ScreenGui extends LayerCollector {
 	DisplayOrder: number;
 	/**
 	 * IgnoreGuiInset is a boolean property of ScreenGuis that, when set to true, will force the [GUI Inset](https://developer.roblox.com/en-us/api-reference/function/GuiService/GetGuiInset) imposed by Roblox's CoreGuis to be ignored by this ScreenGui and its descendants. This means that an element with a UDim2 size of `{1,0},{1,0}` will fill up the entire screen, without a 36 pixel gap reserved for Roblox's top bar.
+	 * 
+	 * Tags: NotReplicated
 	 */
 	IgnoreGuiInset: boolean;
 	SafeAreaCompatibility: Enum.SafeAreaCompatibility;
@@ -21469,7 +21426,7 @@ interface LocalizationService extends Instance {
 	/**
 	 * Returns a list of [LocalizationTable](https://developer.roblox.com/en-us/api-reference/class/LocalizationTable) objects used for localizing CoreScripts.
 	 */
-	GetCorescriptLocalizations(this: LocalizationService): Array<Instance>;
+	GetCorescriptLocalizations(this: LocalizationService): Instances;
 	/**
 	 * Returns an `Array`, where each element of the returned `Array` is itself an `Array` of entries in the same format as described in [LocalizationTable:GetEntries](https://developer.roblox.com/en-us/api-reference/function/LocalizationTable/GetEntries). The order of the elements in the returned `Array` is the same order that the [LocalizationTables](https://developer.roblox.com/en-us/api-reference/class/LocalizationTable) will be searched through to attempt autotranslation for the provided [Instance](https://developer.roblox.com/en-us/api-reference/class/Instance). The entry elements within a particular [LocalizationTable](https://developer.roblox.com/en-us/api-reference/class/LocalizationTable) are returned in an unspecified order.
 	 * 
@@ -25247,7 +25204,7 @@ interface BasePart extends PVInstance {
 	 * Returns true if the game engine automatically decides the network owner for this part.
 	 */
 	GetNetworkOwnershipAuto(this: BasePart): boolean;
-	GetNoCollisionConstraints(this: BasePart): Array<Instance>;
+	GetNoCollisionConstraints(this: BasePart): Instances;
 	/**
 	 * This function used to be relevant when Roblox's lag-compensating interpolation of parts online was internal. The interpolation is now applied to the `CFrame` directly.
 	 * @deprecated
@@ -25328,7 +25285,7 @@ interface BasePart extends PVInstance {
 	/**
 	 * Tags: Yields
 	 */
-	IntersectAsync(this: BasePart, parts: Array<Instance>, collisionfidelity?: CastsToEnum<Enum.CollisionFidelity>, renderFidelity?: CastsToEnum<Enum.RenderFidelity>): Instance | undefined;
+	IntersectAsync(this: BasePart, parts: Instances, collisionfidelity?: CastsToEnum<Enum.CollisionFidelity>, renderFidelity?: CastsToEnum<Enum.RenderFidelity>): Instance | undefined;
 	/**
 	 * **SubtractAsync** creates new [UnionOperation](https://developer.roblox.com/en-us/api-reference/class/UnionOperation) which occupies the same space as the part minus the space(s) occupied by the parts in the given array. It does this by invoking the real-time CSG solver. Similar to [Clone](https://developer.roblox.com/en-us/api-reference/function/Instance/Clone), the returned object has no [Parent](https://developer.roblox.com/en-us/api-reference/property/Instance/Parent) set.
 	 * 
@@ -26070,6 +26027,10 @@ interface MeshPart extends TriangleMeshPart {
 	 */
 	readonly JointOffset: Vector3;
 	/**
+	 * Tags: Hidden
+	 */
+	readonly MeshContent: string;
+	/**
 	 * The **MeshId** is the content ID of the mesh that is to be displayed on the [MeshPart](https://developer.roblox.com/en-us/api-reference/class/MeshPart).
 	 * 
 	 * Note that this property currently cannot be changed by scripts as the collision model of the mesh cannot be recomputed during runtime. Developers should not rely on this behavior as it may change in the future. Those looking for a custom mesh object that can be updated during runtime should use [SpecialMesh](https://developer.roblox.com/en-us/api-reference/class/SpecialMesh).
@@ -26104,6 +26065,10 @@ interface MeshPart extends TriangleMeshPart {
 	 * Tags: NotReplicated
 	 */
 	RenderFidelity: Enum.RenderFidelity;
+	/**
+	 * Tags: Hidden
+	 */
+	TextureContent: string;
 	/**
 	 * The texture applied to the [MeshPart](https://developer.roblox.com/en-us/api-reference/class/MeshPart). When this property is set to an empty string, no texture will be applied to the mesh.
 	 * 
@@ -26435,7 +26400,7 @@ interface Model extends PVInstance {
 	 * @deprecated Use `GetExtentsSize` instead
 	 */
 	GetModelSize(this: Model): Vector3;
-	GetPersistentPlayers(this: Model): Array<Instance>;
+	GetPersistentPlayers(this: Model): Instances;
 	/**
 	 * This function has been superseded by [PVInstance:GetPivot](https://developer.roblox.com/en-us/api-reference/function/PVInstance/GetPivot) which acts as a replacement and does not change your code's behavior. Use [PVInstance:GetPivot](https://developer.roblox.com/en-us/api-reference/function/PVInstance/GetPivot) for new work and migrate your existing [Model:GetPrimaryPartCFrame](https://developer.roblox.com/en-us/api-reference/function/Model/GetPrimaryPartCFrame) calls when convenient.
 	 * 
@@ -26788,7 +26753,7 @@ interface WorldRoot extends Model {
 	 * 
 	 * If no parts are provided, false is returned.
 	 */
-	ArePartsTouchingOthers(this: WorldRoot, partList: Array<Instance>, overlapIgnored?: number): boolean;
+	ArePartsTouchingOthers(this: WorldRoot, partList: Instances, overlapIgnored?: number): boolean;
 	Blockcast(
 		this: WorldRoot,
 		cframe: CFrame,
@@ -26804,7 +26769,7 @@ interface WorldRoot extends Model {
 	 * 
 	 * The third argument of BulkMoveTo allows you to further speed up movement of the parts by specifying the [Position](https://developer.roblox.com/en-us/api-reference/property/BasePart/Position) and [Orientation](https://developer.roblox.com/en-us/api-reference/property/BasePart/Orientation). Changed events should not be fired on the parts. If you specify FireCFrameChanged as the BulkMoveMode then only CFrame .Changed will be fired, rather than changed firing for Position, Orientation, and CFrame like it normally does.
 	 */
-	BulkMoveTo(this: WorldRoot, partList: Array<Instance>, cframeList: Array<any>, eventMode?: CastsToEnum<Enum.BulkMoveMode>): void;
+	BulkMoveTo(this: WorldRoot, partList: Instances, cframeList: Array<any>, eventMode?: CastsToEnum<Enum.BulkMoveMode>): void;
 	/**
 	 * **FindPartOnRay** uses [raycasting](https://developer.roblox.com/articles/Raycasting) to find the first [BasePart](https://developer.roblox.com/en-us/api-reference/class/BasePart) or [Terrain](https://developer.roblox.com/en-us/api-reference/class/Terrain) cell intersecting with a given [Ray](https://developer.roblox.com/en-us/api-reference/datatype/Ray). This function returns the [BasePart](https://developer.roblox.com/en-us/api-reference/class/BasePart) or terrain cell hit, the point of intersection, the surface normal at the point of intersection, and the associated [Material](https://developer.roblox.com/en-us/api-reference/enum/Material) hit.
 	 * 
@@ -27078,7 +27043,7 @@ interface WorldRoot extends Model {
 	 * *   If a nil value is given in the ignore list, instances after this value will not be ignored
 	 * @deprecated Use `GetPartBoundsInBox` instead
 	 */
-	IsRegion3EmptyWithIgnoreList(this: WorldRoot, region: Region3, ignoreDescendentsTable: Array<Instance>): boolean;
+	IsRegion3EmptyWithIgnoreList(this: WorldRoot, region: Region3, ignoreDescendentsTable: Instances): boolean;
 	/**
 	 * Casts a ray using an origin, direction, and optional [RaycastParams](https://developer.roblox.com/en-us/api-reference/datatype/RaycastParams). If it finds an eligible [BasePart](https://developer.roblox.com/en-us/api-reference/class/BasePart) or [Terrain](https://developer.roblox.com/en-us/api-reference/class/Terrain) cell, a [RaycastResult](https://developer.roblox.com/en-us/api-reference/datatype/RaycastResult) is returned containing the results of the operation. If no [RaycastParams](https://developer.roblox.com/en-us/api-reference/datatype/RaycastParams) object is provided, the defaults are used (all parts are considered and [Terrain](https://developer.roblox.com/en-us/api-reference/class/Terrain) water is not ignored).
 	 * 
@@ -27365,7 +27330,7 @@ interface Workspace extends WorldRoot {
 	 * 
 	 * Developers interested in seeing how this function is used in the Roblox Studio should see the [Studio Tools GitHub repository](https://github.com/Roblox/Studio-Tools).
 	 */
-	JoinToOutsiders(this: Workspace, objects: Array<Instance>, jointType: CastsToEnum<Enum.JointCreationMode>): void;
+	JoinToOutsiders(this: Workspace, objects: Instances, jointType: CastsToEnum<Enum.JointCreationMode>): void;
 	/**
 	 * Returns true if the game has the PGS Physics solver enabled.
 	 * 
@@ -27402,7 +27367,7 @@ interface Workspace extends WorldRoot {
 	 * 
 	 * Developers interested in seeing how this function is used in the Roblox Studio should see the [Studio Tools GitHub repository](https://github.com/Roblox/Studio-Tools).
 	 */
-	UnjoinFromOutsiders(this: Workspace, objects: Array<Instance>): void;
+	UnjoinFromOutsiders(this: Workspace, objects: Instances): void;
 	readonly PersistentLoaded: RBXScriptSignal<(player: Player) => void>;
 }
 
@@ -30066,7 +30031,7 @@ interface Pose extends PoseBase {
 	 * 
 	 * Note, this function will return all children of the [Pose](https://developer.roblox.com/en-us/api-reference/class/Pose), including non [Pose](https://developer.roblox.com/en-us/api-reference/class/Pose) [Instance](https://developer.roblox.com/en-us/api-reference/class/Instance)s if any are present.
 	 */
-	GetSubPoses(this: Pose): Array<Instance>;
+	GetSubPoses(this: Pose): Instances;
 	/**
 	 * This function removes a sub [Pose](https://developer.roblox.com/en-us/api-reference/class/Pose) from the [Pose](https://developer.roblox.com/en-us/api-reference/class/Pose) by parenting it to nil. It is functionally identical to setting the new pose's [Instance.Parent](https://developer.roblox.com/en-us/api-reference/property/Instance/Parent) to nil.
 	 * 
@@ -30701,6 +30666,17 @@ interface RibbonNotificationService extends Instance {
 	readonly _nominal_RibbonNotificationService: unique symbol;
 }
 
+interface RobloxSerializableInstance extends Instance {
+	/**
+	 * **DO NOT USE!**
+	 *
+	 * This field exists to force TypeScript to recognize this as a nominal type
+	 * @hidden
+	 * @deprecated
+	 */
+	readonly _nominal_RobloxSerializableInstance: unique symbol;
+}
+
 interface RobloxServerStorage extends Instance {
 	/**
 	 * **DO NOT USE!**
@@ -30710,6 +30686,17 @@ interface RobloxServerStorage extends Instance {
 	 * @deprecated
 	 */
 	readonly _nominal_RobloxServerStorage: unique symbol;
+}
+
+interface RomarkRbxAnalyticsService extends Instance {
+	/**
+	 * **DO NOT USE!**
+	 *
+	 * This field exists to force TypeScript to recognize this as a nominal type
+	 * @hidden
+	 * @deprecated
+	 */
+	readonly _nominal_RomarkRbxAnalyticsService: unique symbol;
 }
 
 interface RomarkService extends Instance {
@@ -31821,7 +31808,7 @@ interface DataModel extends ServiceProvider<Services> {
 	 * This event fires when a property of any object in the [DataModel](https://developer.roblox.com/en-us/api-reference/class/DataModel) is changed.
 	 * @deprecated
 	 */
-	readonly ItemChanged: RBXScriptSignal<(object: Instance, descriptor: string) => void>;
+	readonly ItemChanged: RBXScriptSignal<(object: Object, descriptor: string) => void>;
 	/**
 	 * This event fires on the client when the game finishes loading for the first time.
 	 * 
@@ -32301,8 +32288,6 @@ interface Sound extends Instance {
 	 * How RollOffMaxDistance impacts the attenuation of a sound (manner in which it fades out) is dependent on the [Sound.RollOffMode](https://developer.roblox.com/en-us/api-reference/property/Sound/RollOffMode) property. When RollOffMode is set to use an inverse type distance model (Inverse or InverseTapered) the RollOffMaxDistance will not effect the attenuation of the sound. This means that low values for RollOffMaxDistance will cause the sound to abruptly cut off when the listener reaches the RollOffMaxDistance. In most cases this is not desirable and developers are advised not to use low RollOffMaxDistance values.
 	 * 
 	 * When RollOffMode is set to a linear type distance model (Linear or LinearSquared) the sound will attenuate between [Sound.EmitterSize](https://developer.roblox.com/en-us/api-reference/property/Sound/EmitterSize) and MaxDistance (with playback volume reaching zero at RollOffMaxDistance). This is less realistic, but in some cases allows attenuation to be handled in a more intuitive way.
-	 * 
-	 * Tags: NotReplicated
 	 */
 	RollOffMaxDistance: number;
 	/**
@@ -32311,8 +32296,6 @@ interface Sound extends Instance {
 	 * Sounds parented to a [BasePart](https://developer.roblox.com/en-us/api-reference/class/BasePart) or [Attachment](https://developer.roblox.com/en-us/api-reference/class/Attachment) that are descendants of the [Workspace](https://developer.roblox.com/en-us/api-reference/class/Workspace) are considered 3D sounds and their volume whilst playing is dependent on the distance between the client's sound listener ([Camera](https://developer.roblox.com/en-us/api-reference/class/Camera) position by default) and the Sound's parent. Three properties influence this behavior RollOffMinDistance, [Sound.RollOffMaxDistance](https://developer.roblox.com/en-us/api-reference/property/Sound/RollOffMaxDistance), and [Sound.RollOffMode](https://developer.roblox.com/en-us/api-reference/property/Sound/RollOffMode).
 	 * 
 	 * The way the [Sound](https://developer.roblox.com/en-us/api-reference/class/Sound) attenuates (fades out) after the distance between the listener and the sound exceeds the RollOffMinDistance is determined by the RollOffMode.
-	 * 
-	 * Tags: NotReplicated
 	 */
 	RollOffMinDistance: number;
 	/**
@@ -33394,10 +33377,6 @@ interface StarterPlayer extends Instance {
 	 */
 	AutoJumpEnabled: boolean;
 	/**
-	 * Tags: NotReplicated, NotBrowsable
-	 */
-	AvatarJointUpgrade: Enum.AvatarJointUpgrade;
-	/**
 	 * The CameraMaxZoomDistance [StarterPlayer](https://developer.roblox.com/en-us/api-reference/class/StarterPlayer) property sets the maximum distance in studs the camera can be from the character with the default cameras.
 	 * 
 	 * This property sets the default value of [Player.CameraMaxZoomDistance](https://developer.roblox.com/en-us/api-reference/property/Player/CameraMaxZoomDistance) for each player who joins the game. If this value is set to a lower value than [StarterPlayer.CameraMinZoomDistance](https://developer.roblox.com/en-us/api-reference/property/StarterPlayer/CameraMinZoomDistance) it will be increased to CameraMinZoomDistance.
@@ -33688,9 +33667,18 @@ interface Stats extends Instance {
 	 */
 	readonly DataSendKbps: number;
 	/**
+	 * Tags: NotReplicated
+	 */
+	readonly FrameTime: number;
+	/**
+	 * Tags: NotReplicated
+	 */
+	readonly HeartbeatTime: number;
+	/**
 	 * The HeartbeatTimeMs property is a a measurement of the total amount of time it takes long it takes for Roblox to update all of its Task Scheduler jobs, in milliseconds. If this value is high, then it means one of the tasks are hogging up a lot of resources.
 	 * 
 	 * Tags: NotReplicated
+	 * @deprecated
 	 */
 	readonly HeartbeatTimeMs: number;
 	/**
@@ -33724,11 +33712,16 @@ interface Stats extends Instance {
 	 */
 	readonly PhysicsSendKbps: number;
 	/**
+	 * Tags: NotReplicated
+	 */
+	readonly PhysicsStepTime: number;
+	/**
 	 * A measurement of how long it takes for the physics engine to update its current state, in milliseconds.  
 	 *   
 	 * If this value is high, then it means the game instance is under stress from the physics simulations taking place.
 	 * 
 	 * Tags: NotReplicated
+	 * @deprecated
 	 */
 	readonly PhysicsStepTimeMs: number;
 	/**
@@ -33737,6 +33730,46 @@ interface Stats extends Instance {
 	 * Tags: NotReplicated
 	 */
 	readonly PrimitivesCount: number;
+	/**
+	 * Tags: NotReplicated
+	 */
+	readonly RenderCPUFrameTime: number;
+	/**
+	 * Tags: NotReplicated
+	 */
+	readonly RenderGPUFrameTime: number;
+	/**
+	 * Tags: NotReplicated
+	 */
+	readonly SceneDrawcallCount: number;
+	/**
+	 * Tags: NotReplicated
+	 */
+	readonly SceneTriangleCount: number;
+	/**
+	 * Tags: NotReplicated
+	 */
+	readonly ShadowsDrawcallCount: number;
+	/**
+	 * Tags: NotReplicated
+	 */
+	readonly ShadowsTriangleCount: number;
+	/**
+	 * Tags: NotReplicated
+	 */
+	readonly UI2DDrawcallCount: number;
+	/**
+	 * Tags: NotReplicated
+	 */
+	readonly UI2DTriangleCount: number;
+	/**
+	 * Tags: NotReplicated
+	 */
+	readonly UI3DDrawcallCount: number;
+	/**
+	 * Tags: NotReplicated
+	 */
+	readonly UI3DTriangleCount: number;
 	/**
 	 * Returns the number of megabytes that are being consumed in the specified _DeveloperMemoryTag_ category.
 	 */
@@ -33756,6 +33789,10 @@ interface StreamingService extends Instance {
 	 * @deprecated
 	 */
 	readonly _nominal_StreamingService: unique symbol;
+	/**
+	 * Tags: Yields
+	 */
+	ExecuteCommandAsync(this: StreamingService, requestId: string, commandName: string, arg: unknown): unknown;
 }
 
 interface StudioAssetService extends Instance {
@@ -33893,9 +33930,9 @@ interface StyleBase extends Instance {
 	 * @deprecated
 	 */
 	readonly _nominal_StyleBase: unique symbol;
-	GetStyleRules(this: StyleBase): Array<Instance>;
+	GetStyleRules(this: StyleBase): Instances;
 	InsertStyleRule(this: StyleBase, rule: StyleRule, index: number | undefined): void;
-	SetStyleRules(this: StyleBase, rules: Array<Instance>): void;
+	SetStyleRules(this: StyleBase, rules: Instances): void;
 	readonly StyleRulesChanged: RBXScriptSignal<() => void>;
 }
 
@@ -33929,8 +33966,8 @@ interface StyleSheet extends StyleBase {
 	 * @deprecated
 	 */
 	readonly _nominal_StyleSheet: unique symbol;
-	GetDerives(this: StyleSheet): Array<Instance>;
-	SetDerives(this: StyleSheet, derives: Array<Instance>): void;
+	GetDerives(this: StyleSheet): Instances;
+	SetDerives(this: StyleSheet, derives: Instances): void;
 }
 
 interface StyleDerive extends Instance {
@@ -34178,6 +34215,17 @@ interface Teams extends Instance {
 	 * @deprecated
 	 */
 	RebalanceTeams(this: Teams): void;
+}
+
+interface TelemetryService extends Instance {
+	/**
+	 * **DO NOT USE!**
+	 *
+	 * This field exists to force TypeScript to recognize this as a nominal type
+	 * @hidden
+	 * @deprecated
+	 */
+	readonly _nominal_TelemetryService: unique symbol;
 }
 
 /** This class is an instance that is returned by the `TeleportAsync` function with information about the teleport. */
@@ -35137,7 +35185,12 @@ interface TextChannel extends Instance {
 	 * @deprecated
 	 */
 	readonly _nominal_TextChannel: unique symbol;
+	/**
+	 * Tags: NotReplicated
+	 */
+	readonly DirectChatRequester: Player | undefined;
 	DisplaySystemMessage(this: TextChannel, systemMessage: string, metadata?: string): TextChatMessage;
+	SetDirectChatRequester(this: TextChannel, requester: Player): void;
 	/**
 	 * Tags: Yields
 	 */
@@ -35400,6 +35453,10 @@ interface TextChatService extends Instance {
 	 * Tags: Yields
 	 */
 	CanUsersChatAsync(this: TextChatService, userIdFrom: number, userIdTo: number): boolean;
+	/**
+	 * Tags: Yields
+	 */
+	CanUsersDirectChatAsync(this: TextChatService, requesterUserId: number, userIds: Array<any>): unknown;
 	readonly BubbleDisplayed: RBXScriptSignal<(partOrCharacter: BasePart | Model, textChatMessage: TextChatMessage) => void>;
 	readonly MessageReceived: RBXScriptSignal<(textChatMessage: TextChatMessage) => void>;
 	readonly SendingMessage: RBXScriptSignal<(textChatMessage: TextChatMessage) => void>;
@@ -35543,6 +35600,10 @@ interface TextService extends Instance {
 	 * Tags: Yields
 	 */
 	GetTextBoundsAsync(this: TextService, params: GetTextBoundsParams): Vector2;
+	/**
+	 * Tags: Yields
+	 */
+	GetTextSizeOffsetAsync(this: TextService, fontSize: number, font: Font): number;
 }
 
 interface TextSource extends Instance {
@@ -38298,6 +38359,7 @@ interface UserInputService extends Instance {
 	 * *   [TextBox.FocusLost](https://developer.roblox.com/en-us/api-reference/event/TextBox/FocusLost)
 	 */
 	readonly TextBoxFocused: RBXScriptSignal<(textboxFocused: TextBox) => void>;
+	readonly TouchDrag: RBXScriptSignal<(dragDirection: Enum.SwipeDirection, numberOfTouches: number, gameProcessedEvent: boolean) => void>;
 	/**
 	 * The TouchEnded event fires when a user released their finger from the screen of a TouchEnabled device, ending touch input with the device.
 	 * 
@@ -39514,6 +39576,17 @@ interface VoiceChatService extends Instance {
 	 * Tags: Yields
 	 */
 	IsVoiceEnabledForUserIdAsync(this: VoiceChatService, userId: number): boolean;
+}
+
+interface WebViewService extends Instance {
+	/**
+	 * **DO NOT USE!**
+	 *
+	 * This field exists to force TypeScript to recognize this as a nominal type
+	 * @hidden
+	 * @deprecated
+	 */
+	readonly _nominal_WebViewService: unique symbol;
 }
 
 /** **WeldConstraints** are used to attach two [parts](https://developer.roblox.com/en-us/api-reference/class/BasePart) together. The constraint makes sure that the parts stay in the same relative position and orientation to one another, meaning that if one part moves, the other will move the same amount. Even if the two parts are not touching one another, they can be welded together with a weld constraint.

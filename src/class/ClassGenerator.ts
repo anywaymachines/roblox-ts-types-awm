@@ -326,6 +326,7 @@ const VALUE_TYPE_MAP = new Map<string, string | null>([
 	["EventInstance", "RBXScriptSignal"],
 	["float", "number"],
 	["Function", "Callback"],
+	["Instances", "ReadonlyArray<Instance>"],
 	["int", "number"],
 	["int64", "number"],
 	["Map", "object"],
@@ -361,6 +362,7 @@ function safeValueType(valueType: ApiValueType, canImplicitlyConvertEnum = false
 
 const RETURN_TYPE_MAP = new Map([
 	["Instance", "Instance | undefined"], // api dump lies :(
+	["Instances", "ReadonlyArray<Instance>"],
 	["any", "unknown"],
 	["Array<any>", "unknown"],
 ]);

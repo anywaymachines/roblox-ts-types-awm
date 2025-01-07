@@ -7,6 +7,7 @@
 interface Services {
 	AccountService: AccountService;
 	AchievementService: AchievementService;
+	ActivityHistoryEventService: ActivityHistoryEventService;
 	AnalyticsService: AnalyticsService;
 	AnimationClipProvider: AnimationClipProvider;
 	AnimationFromVideoCreatorService: AnimationFromVideoCreatorService;
@@ -20,10 +21,12 @@ interface Services {
 	AssetManagerService: AssetManagerService;
 	AssetService: AssetService;
 	AudioFocusService: AudioFocusService;
+	AuroraService: AuroraService;
 	AvatarChatService: AvatarChatService;
 	AvatarCreationService: AvatarCreationService;
 	AvatarEditorService: AvatarEditorService;
 	AvatarImportService: AvatarImportService;
+	AvatarPreloader: AvatarPreloader;
 	BadgeService: BadgeService;
 	BulkImportService: BulkImportService;
 	CalloutService: CalloutService;
@@ -60,9 +63,11 @@ interface Services {
 	ExperienceNotificationService: ExperienceNotificationService;
 	ExperienceService: ExperienceService;
 	ExperienceStateCaptureService: ExperienceStateCaptureService;
+	ExplorerServiceVisibilityService: ExplorerServiceVisibilityService;
 	FaceAnimatorService: FaceAnimatorService;
 	FacialAnimationRecordingService: FacialAnimationRecordingService;
 	FacialAnimationStreamingServiceV2: FacialAnimationStreamingServiceV2;
+	FeatureRestrictionManager: FeatureRestrictionManager;
 	GamepadService: GamepadService;
 	GamePassService: GamePassService;
 	GenericChallengeService: GenericChallengeService;
@@ -98,11 +103,13 @@ interface Services {
 	MessageBusService: MessageBusService;
 	MessagingService: MessagingService;
 	MetaBreakpointManager: MetaBreakpointManager;
+	MLModelDeliveryService: MLModelDeliveryService;
 	OmniRecommendationsService: OmniRecommendationsService;
 	OpenCloudService: OpenCloudService;
 	PackageUIService: PackageUIService;
 	PatchBundlerFileWatch: PatchBundlerFileWatch;
 	PathfindingService: PathfindingService;
+	PerformanceControlService: PerformanceControlService;
 	PhysicsService: PhysicsService;
 	PlacesService: PlacesService;
 	PlaceStatsService: PlaceStatsService;
@@ -370,6 +377,7 @@ interface CreatableInstances {
 	PrismaticConstraint: PrismaticConstraint;
 	ProximityPrompt: ProximityPrompt;
 	RayValue: RayValue;
+	RelativeGui: RelativeGui;
 	RemoteEvent: RemoteEvent;
 	RemoteFunction: RemoteFunction;
 	ReverbSoundEffect: ReverbSoundEffect;
@@ -462,6 +470,7 @@ interface CreatableInstances {
 	VelocityMotor: VelocityMotor;
 	VideoDeviceInput: VideoDeviceInput;
 	VideoFrame: VideoFrame;
+	VideoPlayer: VideoPlayer;
 	ViewportFrame: ViewportFrame;
 	VisualizationMode: VisualizationMode;
 	VisualizationModeCategory: VisualizationModeCategory;
@@ -1516,6 +1525,17 @@ interface AchievementService extends Instance {
 	readonly _nominal_AchievementService: unique symbol;
 }
 
+interface ActivityHistoryEventService extends Instance {
+	/**
+	 * **DO NOT USE!**
+	 *
+	 * This field exists to force TypeScript to recognize this as a nominal type
+	 * @hidden
+	 * @deprecated
+	 */
+	readonly _nominal_ActivityHistoryEventService: unique symbol;
+}
+
 interface AdPortal extends Instance {
 	/**
 	 * **DO NOT USE!**
@@ -2548,6 +2568,14 @@ interface AssetService extends Instance {
 	/**
 	 * Tags: Yields
 	 */
+	CreateAssetAsync(this: AssetService, object: Object, assetType: CastsToEnum<Enum.AssetType>, requestParameters?: object): unknown;
+	/**
+	 * Tags: Yields
+	 */
+	CreateAssetVersionAsync(this: AssetService, object: Object, assetType: CastsToEnum<Enum.AssetType>, assetId: number, requestParameters?: object): unknown;
+	/**
+	 * Tags: Yields
+	 */
 	CreateEditableImageAsync(this: AssetService, content: string, editableImageOptions: object | undefined): EditableImage;
 	/**
 	 * Tags: Yields
@@ -2902,7 +2930,7 @@ interface Attachment extends Instance {
 	 * @deprecated Use `Axis` instead
 	 */
 	GetAxis(this: Attachment): Vector3;
-	GetConstraints(this: Attachment): Instances;
+	GetConstraints(this: Attachment): ReadonlyArray<Instance>;
 	/**
 	 * Returns the value of the Attachment's [Attachment.SecondaryAxis](https://developer.roblox.com/en-us/api-reference/property/Attachment/SecondaryAxis).
 	 * @deprecated Use `SecondaryAxis` instead
@@ -2985,11 +3013,12 @@ interface AudioAnalyzer extends Instance {
 	 */
 	readonly RmsLevel: number;
 	SpectrumEnabled: boolean;
-	GetConnectedWires(this: AudioAnalyzer, pin: string): Instances;
+	GetConnectedWires(this: AudioAnalyzer, pin: string): ReadonlyArray<Instance>;
 	/**
 	 * Tags: CustomLuaState
 	 */
 	GetSpectrum(this: AudioAnalyzer): Array<number>;
+	readonly WiringChanged: RBXScriptSignal<(connected: boolean, pin: string, wire: Wire, instance: Instance) => void>;
 }
 
 interface AudioChorus extends Instance {
@@ -3005,7 +3034,8 @@ interface AudioChorus extends Instance {
 	Depth: number;
 	Mix: number;
 	Rate: number;
-	GetConnectedWires(this: AudioChorus, pin: string): Instances;
+	GetConnectedWires(this: AudioChorus, pin: string): ReadonlyArray<Instance>;
+	readonly WiringChanged: RBXScriptSignal<(connected: boolean, pin: string, wire: Wire, instance: Instance) => void>;
 }
 
 interface AudioCompressor extends Instance {
@@ -3023,7 +3053,8 @@ interface AudioCompressor extends Instance {
 	Ratio: number;
 	Release: number;
 	Threshold: number;
-	GetConnectedWires(this: AudioCompressor, pin: string): Instances;
+	GetConnectedWires(this: AudioCompressor, pin: string): ReadonlyArray<Instance>;
+	readonly WiringChanged: RBXScriptSignal<(connected: boolean, pin: string, wire: Wire, instance: Instance) => void>;
 }
 
 interface AudioDeviceInput extends Instance {
@@ -3040,9 +3071,10 @@ interface AudioDeviceInput extends Instance {
 	Muted: boolean;
 	Player: Player | undefined;
 	Volume: number;
-	GetConnectedWires(this: AudioDeviceInput, pin: string): Instances;
+	GetConnectedWires(this: AudioDeviceInput, pin: string): ReadonlyArray<Instance>;
 	GetUserIdAccessList(this: AudioDeviceInput): unknown;
 	SetUserIdAccessList(this: AudioDeviceInput, userIds: Array<any>): void;
+	readonly WiringChanged: RBXScriptSignal<(connected: boolean, pin: string, wire: Wire, instance: Instance) => void>;
 }
 
 interface AudioDeviceOutput extends Instance {
@@ -3055,7 +3087,8 @@ interface AudioDeviceOutput extends Instance {
 	 */
 	readonly _nominal_AudioDeviceOutput: unique symbol;
 	Player: Player | undefined;
-	GetConnectedWires(this: AudioDeviceOutput, pin: string): Instances;
+	GetConnectedWires(this: AudioDeviceOutput, pin: string): ReadonlyArray<Instance>;
+	readonly WiringChanged: RBXScriptSignal<(connected: boolean, pin: string, wire: Wire, instance: Instance) => void>;
 }
 
 interface AudioDistortion extends Instance {
@@ -3069,7 +3102,8 @@ interface AudioDistortion extends Instance {
 	readonly _nominal_AudioDistortion: unique symbol;
 	Bypass: boolean;
 	Level: number;
-	GetConnectedWires(this: AudioDistortion, pin: string): Instances;
+	GetConnectedWires(this: AudioDistortion, pin: string): ReadonlyArray<Instance>;
+	readonly WiringChanged: RBXScriptSignal<(connected: boolean, pin: string, wire: Wire, instance: Instance) => void>;
 }
 
 interface AudioEcho extends Instance {
@@ -3087,7 +3121,8 @@ interface AudioEcho extends Instance {
 	Feedback: number;
 	RampTime: number;
 	WetLevel: number;
-	GetConnectedWires(this: AudioEcho, pin: string): Instances;
+	GetConnectedWires(this: AudioEcho, pin: string): ReadonlyArray<Instance>;
+	readonly WiringChanged: RBXScriptSignal<(connected: boolean, pin: string, wire: Wire, instance: Instance) => void>;
 }
 
 interface AudioEmitter extends Instance {
@@ -3100,16 +3135,17 @@ interface AudioEmitter extends Instance {
 	 */
 	readonly _nominal_AudioEmitter: unique symbol;
 	AudioInteractionGroup: string;
+	SimulationFidelity: Enum.AudioSimulationFidelity;
 	/**
 	 * Tags: CustomLuaState
 	 */
 	GetAngleAttenuation(this: AudioEmitter): object;
-	GetConnectedWires(this: AudioEmitter, pin: string): Instances;
+	GetConnectedWires(this: AudioEmitter, pin: string): ReadonlyArray<Instance>;
 	/**
 	 * Tags: CustomLuaState
 	 */
 	GetDistanceAttenuation(this: AudioEmitter): object;
-	GetInteractingListeners(this: AudioEmitter): Instances;
+	GetInteractingListeners(this: AudioEmitter): ReadonlyArray<Instance>;
 	/**
 	 * Tags: CustomLuaState
 	 */
@@ -3118,6 +3154,7 @@ interface AudioEmitter extends Instance {
 	 * Tags: CustomLuaState
 	 */
 	SetDistanceAttenuation(this: AudioEmitter, curve: DistanceAttenuationCurve): void;
+	readonly WiringChanged: RBXScriptSignal<(connected: boolean, pin: string, wire: Wire, instance: Instance) => void>;
 }
 
 interface AudioEqualizer extends Instance {
@@ -3134,7 +3171,8 @@ interface AudioEqualizer extends Instance {
 	LowGain: number;
 	MidGain: number;
 	MidRange: NumberRange;
-	GetConnectedWires(this: AudioEqualizer, pin: string): Instances;
+	GetConnectedWires(this: AudioEqualizer, pin: string): ReadonlyArray<Instance>;
+	readonly WiringChanged: RBXScriptSignal<(connected: boolean, pin: string, wire: Wire, instance: Instance) => void>;
 }
 
 interface AudioFader extends Instance {
@@ -3148,7 +3186,8 @@ interface AudioFader extends Instance {
 	readonly _nominal_AudioFader: unique symbol;
 	Bypass: boolean;
 	Volume: number;
-	GetConnectedWires(this: AudioFader, pin: string): Instances;
+	GetConnectedWires(this: AudioFader, pin: string): ReadonlyArray<Instance>;
+	readonly WiringChanged: RBXScriptSignal<(connected: boolean, pin: string, wire: Wire, instance: Instance) => void>;
 }
 
 interface AudioFilter extends Instance {
@@ -3165,8 +3204,9 @@ interface AudioFilter extends Instance {
 	Frequency: number;
 	Gain: number;
 	Q: number;
-	GetConnectedWires(this: AudioFilter, pin: string): Instances;
+	GetConnectedWires(this: AudioFilter, pin: string): ReadonlyArray<Instance>;
 	GetGainAt(this: AudioFilter, frequency: number): number;
+	readonly WiringChanged: RBXScriptSignal<(connected: boolean, pin: string, wire: Wire, instance: Instance) => void>;
 }
 
 interface AudioFlanger extends Instance {
@@ -3182,7 +3222,8 @@ interface AudioFlanger extends Instance {
 	Depth: number;
 	Mix: number;
 	Rate: number;
-	GetConnectedWires(this: AudioFlanger, pin: string): Instances;
+	GetConnectedWires(this: AudioFlanger, pin: string): ReadonlyArray<Instance>;
+	readonly WiringChanged: RBXScriptSignal<(connected: boolean, pin: string, wire: Wire, instance: Instance) => void>;
 }
 
 interface AudioFocusService extends Instance {
@@ -3208,7 +3249,8 @@ interface AudioLimiter extends Instance {
 	Bypass: boolean;
 	MaxLevel: number;
 	Release: number;
-	GetConnectedWires(this: AudioLimiter, pin: string): Instances;
+	GetConnectedWires(this: AudioLimiter, pin: string): ReadonlyArray<Instance>;
+	readonly WiringChanged: RBXScriptSignal<(connected: boolean, pin: string, wire: Wire, instance: Instance) => void>;
 }
 
 interface AudioListener extends Instance {
@@ -3221,16 +3263,17 @@ interface AudioListener extends Instance {
 	 */
 	readonly _nominal_AudioListener: unique symbol;
 	AudioInteractionGroup: string;
+	SimulationFidelity: Enum.AudioSimulationFidelity;
 	/**
 	 * Tags: CustomLuaState
 	 */
 	GetAngleAttenuation(this: AudioListener): object;
-	GetConnectedWires(this: AudioListener, pin: string): Instances;
+	GetConnectedWires(this: AudioListener, pin: string): ReadonlyArray<Instance>;
 	/**
 	 * Tags: CustomLuaState
 	 */
 	GetDistanceAttenuation(this: AudioListener): object;
-	GetInteractingEmitters(this: AudioListener): Instances;
+	GetInteractingEmitters(this: AudioListener): ReadonlyArray<Instance>;
 	/**
 	 * Tags: CustomLuaState
 	 */
@@ -3239,6 +3282,7 @@ interface AudioListener extends Instance {
 	 * Tags: CustomLuaState
 	 */
 	SetDistanceAttenuation(this: AudioListener, curve: object): void;
+	readonly WiringChanged: RBXScriptSignal<(connected: boolean, pin: string, wire: Wire, instance: Instance) => void>;
 }
 
 interface AudioPitchShifter extends Instance {
@@ -3252,7 +3296,8 @@ interface AudioPitchShifter extends Instance {
 	readonly _nominal_AudioPitchShifter: unique symbol;
 	Bypass: boolean;
 	Pitch: number;
-	GetConnectedWires(this: AudioPitchShifter, pin: string): Instances;
+	GetConnectedWires(this: AudioPitchShifter, pin: string): ReadonlyArray<Instance>;
+	readonly WiringChanged: RBXScriptSignal<(connected: boolean, pin: string, wire: Wire, instance: Instance) => void>;
 }
 
 interface AudioPlayer extends Instance {
@@ -3281,7 +3326,7 @@ interface AudioPlayer extends Instance {
 	readonly TimeLength: number;
 	TimePosition: number;
 	Volume: number;
-	GetConnectedWires(this: AudioPlayer, pin: string): Instances;
+	GetConnectedWires(this: AudioPlayer, pin: string): ReadonlyArray<Instance>;
 	Play(this: AudioPlayer): void;
 	Stop(this: AudioPlayer): void;
 	/**
@@ -3290,6 +3335,7 @@ interface AudioPlayer extends Instance {
 	GetWaveformAsync(this: AudioPlayer, timeRange: NumberRange, samples: number): unknown;
 	readonly Ended: RBXScriptSignal<() => void>;
 	readonly Looped: RBXScriptSignal<() => void>;
+	readonly WiringChanged: RBXScriptSignal<(connected: boolean, pin: string, wire: Wire, instance: Instance) => void>;
 }
 
 interface AudioReverb extends Instance {
@@ -3314,7 +3360,8 @@ interface AudioReverb extends Instance {
 	LowShelfGain: number;
 	ReferenceFrequency: number;
 	WetLevel: number;
-	GetConnectedWires(this: AudioReverb, pin: string): Instances;
+	GetConnectedWires(this: AudioReverb, pin: string): ReadonlyArray<Instance>;
+	readonly WiringChanged: RBXScriptSignal<(connected: boolean, pin: string, wire: Wire, instance: Instance) => void>;
 }
 
 interface AudioSearchParams extends Instance {
@@ -3339,6 +3386,23 @@ interface AudioSearchParams extends Instance {
 	SearchKeyword: string;
 	Tag: string;
 	Title: string;
+}
+
+interface AuroraService extends Instance {
+	/**
+	 * **DO NOT USE!**
+	 *
+	 * This field exists to force TypeScript to recognize this as a nominal type
+	 * @hidden
+	 * @deprecated
+	 */
+	readonly _nominal_AuroraService: unique symbol;
+	GetServerView(this: AuroraService, target: Instance): Instance | undefined;
+	IsDesynced(this: AuroraService, target: Instance): boolean;
+	NetDesync(this: AuroraService, target: Instance): void;
+	NetSync(this: AuroraService, target: Instance): void;
+	SetIncomingReplicationLag(this: AuroraService, seconds: number): void;
+	UpdateProperties(this: AuroraService, target: Instance): void;
 }
 
 interface AvatarChatService extends Instance {
@@ -3866,6 +3930,17 @@ interface AvatarImportService extends Instance {
 	 * @deprecated
 	 */
 	readonly _nominal_AvatarImportService: unique symbol;
+}
+
+interface AvatarPreloader extends Instance {
+	/**
+	 * **DO NOT USE!**
+	 *
+	 * This field exists to force TypeScript to recognize this as a nominal type
+	 * @hidden
+	 * @deprecated
+	 */
+	readonly _nominal_AvatarPreloader: unique symbol;
 }
 
 /** A container object that holds a [Player](https://developer.roblox.com/en-us/api-reference/class/Player)'s inventory. Any [Tool](https://developer.roblox.com/en-us/api-reference/class/Tool) in a player's Backpack will be displayed in their inventory at the bottom of their screen. Selecting [Tool](https://developer.roblox.com/en-us/api-reference/class/Tool)s from the inventory will equip the [Tool](https://developer.roblox.com/en-us/api-reference/class/Tool), moving it from the Backpack to the player's character.
@@ -6789,7 +6864,7 @@ interface Camera extends Instance {
 	 * Note, as this function requires an _ignoreList_ to run, you should pass an empty table when none is required.
 	 * @deprecated
 	 */
-	GetLargestCutoffDistance(this: Camera, ignoreList: Instances): number;
+	GetLargestCutoffDistance(this: Camera, ignoreList: ReadonlyArray<Instance>): number;
 	/**
 	 * This function is broken and should not be used
 	 * 
@@ -11194,6 +11269,18 @@ interface ExplorerFilterAutocompleter extends Instance {
 	readonly _nominal_ExplorerFilterAutocompleter: unique symbol;
 }
 
+interface ExplorerServiceVisibilityService extends Instance {
+	/**
+	 * **DO NOT USE!**
+	 *
+	 * This field exists to force TypeScript to recognize this as a nominal type
+	 * @hidden
+	 * @deprecated
+	 */
+	readonly _nominal_ExplorerServiceVisibilityService: unique symbol;
+	GetServiceVisibility(this: ExplorerServiceVisibilityService, service: Instance): boolean;
+}
+
 /** An Explosion applies force to `BaseParts` within the explosion's [Explosion.BlastRadius](https://developer.roblox.com/en-us/api-reference/property/Explosion/BlastRadius). This force breaks joints between parts and kills [Humanoid](https://developer.roblox.com/en-us/api-reference/class/Humanoid) characters not protected by a [ForceField](https://developer.roblox.com/en-us/api-reference/class/ForceField).
  * 
  * If an explosion is instanced whilst the game is running, it will destroy itself shortly afterwards meaning they do not need to be cleaned up using the [Debris](https://developer.roblox.com/en-us/api-reference/class/Debris) service.
@@ -11643,6 +11730,17 @@ interface MotorFeature extends Feature {
 	 * @deprecated
 	 */
 	readonly _nominal_MotorFeature: unique symbol;
+}
+
+interface FeatureRestrictionManager extends Instance {
+	/**
+	 * **DO NOT USE!**
+	 *
+	 * This field exists to force TypeScript to recognize this as a nominal type
+	 * @hidden
+	 * @deprecated
+	 */
+	readonly _nominal_FeatureRestrictionManager: unique symbol;
 }
 
 /**   
@@ -12239,6 +12337,10 @@ interface DataStore extends GlobalDataStore {
 		key: string,
 		version: string,
 	): LuaTuple<[value: unknown, keyInfo: DataStoreKeyInfo]>;
+	/**
+	 * Tags: Yields
+	 */
+	GetVersionAtTimeAsync(this: DataStore, key: string, timestamp: number): unknown;
 	/**
 	 * This function returns a [DataStoreKeyPages](https://developer.roblox.com/en-us/api-reference/class/DataStoreKeyPages) object for enumerating through keys of a data store. It accepts an optional `prefix` parameter to only locate keys whose names start with the provided prefix.
 	 * 
@@ -14043,6 +14145,17 @@ interface TextLabel extends GuiLabel {
 	 * This property is used in conjunction with [TextLabel.TextXAlignment](https://developer.roblox.com/en-us/api-reference/property/TextLabel/TextXAlignment) to fully determine text alignment on both axes. This property won't affect the read-only properties [TextLabel.TextBounds](https://developer.roblox.com/en-us/api-reference/property/TextLabel/TextBounds) and [TextLabel.TextFits](https://developer.roblox.com/en-us/api-reference/property/TextLabel/TextFits).
 	 */
 	TextYAlignment: Enum.TextYAlignment;
+}
+
+interface RelativeGui extends GuiObject {
+	/**
+	 * **DO NOT USE!**
+	 *
+	 * This field exists to force TypeScript to recognize this as a nominal type
+	 * @hidden
+	 * @deprecated
+	 */
+	readonly _nominal_RelativeGui: unique symbol;
 }
 
 /** The ScrollingFrame is a special [Frame](https://developer.roblox.com/en-us/api-reference/class/Frame) that handles all scrolling for you, with a range of different ways to customize how the scrolling works. An in-depth tutorial for the ScrollingFrame can be found [here](https://developer.roblox.com/articles/Creating-a-Scrolling-Frame-GUI). */
@@ -21426,7 +21539,7 @@ interface LocalizationService extends Instance {
 	/**
 	 * Returns a list of [LocalizationTable](https://developer.roblox.com/en-us/api-reference/class/LocalizationTable) objects used for localizing CoreScripts.
 	 */
-	GetCorescriptLocalizations(this: LocalizationService): Instances;
+	GetCorescriptLocalizations(this: LocalizationService): ReadonlyArray<Instance>;
 	/**
 	 * Returns an `Array`, where each element of the returned `Array` is itself an `Array` of entries in the same format as described in [LocalizationTable:GetEntries](https://developer.roblox.com/en-us/api-reference/function/LocalizationTable/GetEntries). The order of the elements in the returned `Array` is the same order that the [LocalizationTables](https://developer.roblox.com/en-us/api-reference/class/LocalizationTable) will be searched through to attempt autotranslation for the provided [Instance](https://developer.roblox.com/en-us/api-reference/class/Instance). The entry elements within a particular [LocalizationTable](https://developer.roblox.com/en-us/api-reference/class/LocalizationTable) are returned in an unspecified order.
 	 * 
@@ -22902,6 +23015,17 @@ interface LuauScriptAnalyzerService extends Instance {
 	readonly _nominal_LuauScriptAnalyzerService: unique symbol;
 }
 
+interface MLModelDeliveryService extends Instance {
+	/**
+	 * **DO NOT USE!**
+	 *
+	 * This field exists to force TypeScript to recognize this as a nominal type
+	 * @hidden
+	 * @deprecated
+	 */
+	readonly _nominal_MLModelDeliveryService: unique symbol;
+}
+
 interface MarkerCurve extends Instance {
 	/**
 	 * **DO NOT USE!**
@@ -24316,7 +24440,7 @@ interface OpenCloudService extends Instance {
 	/**
 	 * Tags: Yields
 	 */
-	InvokeAsync(this: OpenCloudService, version: string, methodName: string, arguments: object): object;
+	InvokeAsync(this: OpenCloudService, version: string, methodName: string, arguments: object, headers?: object): object;
 }
 
 interface OperationGraph extends Instance {
@@ -24449,6 +24573,7 @@ interface BasePart extends PVInstance {
 	 * Tags: NotReplicated
 	 */
 	readonly AssemblyRootPart: BasePart | undefined;
+	AudioCanCollide: boolean;
 	/**
 	 * The BackParamA property is relevant when a part's [BasePart.BackSurface](https://developer.roblox.com/en-us/api-reference/property/BasePart/BackSurface) is set to Motor or SteppingMotor and [BasePart.BackSurfaceInput](https://developer.roblox.com/en-us/api-reference/property/BasePart/BackSurfaceInput) is set to Sin. It determines the **amplitude** of the motor's rotational velocity, using the following formula:
 	 * 
@@ -25204,7 +25329,7 @@ interface BasePart extends PVInstance {
 	 * Returns true if the game engine automatically decides the network owner for this part.
 	 */
 	GetNetworkOwnershipAuto(this: BasePart): boolean;
-	GetNoCollisionConstraints(this: BasePart): Instances;
+	GetNoCollisionConstraints(this: BasePart): ReadonlyArray<Instance>;
 	/**
 	 * This function used to be relevant when Roblox's lag-compensating interpolation of parts online was internal. The interpolation is now applied to the `CFrame` directly.
 	 * @deprecated
@@ -25285,7 +25410,7 @@ interface BasePart extends PVInstance {
 	/**
 	 * Tags: Yields
 	 */
-	IntersectAsync(this: BasePart, parts: Instances, collisionfidelity?: CastsToEnum<Enum.CollisionFidelity>, renderFidelity?: CastsToEnum<Enum.RenderFidelity>): Instance | undefined;
+	IntersectAsync(this: BasePart, parts: ReadonlyArray<Instance>, collisionfidelity?: CastsToEnum<Enum.CollisionFidelity>, renderFidelity?: CastsToEnum<Enum.RenderFidelity>): Instance | undefined;
 	/**
 	 * **SubtractAsync** creates new [UnionOperation](https://developer.roblox.com/en-us/api-reference/class/UnionOperation) which occupies the same space as the part minus the space(s) occupied by the parts in the given array. It does this by invoking the real-time CSG solver. Similar to [Clone](https://developer.roblox.com/en-us/api-reference/function/Instance/Clone), the returned object has no [Parent](https://developer.roblox.com/en-us/api-reference/property/Instance/Parent) set.
 	 * 
@@ -26400,7 +26525,7 @@ interface Model extends PVInstance {
 	 * @deprecated Use `GetExtentsSize` instead
 	 */
 	GetModelSize(this: Model): Vector3;
-	GetPersistentPlayers(this: Model): Instances;
+	GetPersistentPlayers(this: Model): ReadonlyArray<Instance>;
 	/**
 	 * This function has been superseded by [PVInstance:GetPivot](https://developer.roblox.com/en-us/api-reference/function/PVInstance/GetPivot) which acts as a replacement and does not change your code's behavior. Use [PVInstance:GetPivot](https://developer.roblox.com/en-us/api-reference/function/PVInstance/GetPivot) for new work and migrate your existing [Model:GetPrimaryPartCFrame](https://developer.roblox.com/en-us/api-reference/function/Model/GetPrimaryPartCFrame) calls when convenient.
 	 * 
@@ -26753,7 +26878,7 @@ interface WorldRoot extends Model {
 	 * 
 	 * If no parts are provided, false is returned.
 	 */
-	ArePartsTouchingOthers(this: WorldRoot, partList: Instances, overlapIgnored?: number): boolean;
+	ArePartsTouchingOthers(this: WorldRoot, partList: ReadonlyArray<Instance>, overlapIgnored?: number): boolean;
 	Blockcast(
 		this: WorldRoot,
 		cframe: CFrame,
@@ -26769,7 +26894,7 @@ interface WorldRoot extends Model {
 	 * 
 	 * The third argument of BulkMoveTo allows you to further speed up movement of the parts by specifying the [Position](https://developer.roblox.com/en-us/api-reference/property/BasePart/Position) and [Orientation](https://developer.roblox.com/en-us/api-reference/property/BasePart/Orientation). Changed events should not be fired on the parts. If you specify FireCFrameChanged as the BulkMoveMode then only CFrame .Changed will be fired, rather than changed firing for Position, Orientation, and CFrame like it normally does.
 	 */
-	BulkMoveTo(this: WorldRoot, partList: Instances, cframeList: Array<any>, eventMode?: CastsToEnum<Enum.BulkMoveMode>): void;
+	BulkMoveTo(this: WorldRoot, partList: ReadonlyArray<Instance>, cframeList: Array<any>, eventMode?: CastsToEnum<Enum.BulkMoveMode>): void;
 	/**
 	 * **FindPartOnRay** uses [raycasting](https://developer.roblox.com/articles/Raycasting) to find the first [BasePart](https://developer.roblox.com/en-us/api-reference/class/BasePart) or [Terrain](https://developer.roblox.com/en-us/api-reference/class/Terrain) cell intersecting with a given [Ray](https://developer.roblox.com/en-us/api-reference/datatype/Ray). This function returns the [BasePart](https://developer.roblox.com/en-us/api-reference/class/BasePart) or terrain cell hit, the point of intersection, the surface normal at the point of intersection, and the associated [Material](https://developer.roblox.com/en-us/api-reference/enum/Material) hit.
 	 * 
@@ -27043,7 +27168,7 @@ interface WorldRoot extends Model {
 	 * *   If a nil value is given in the ignore list, instances after this value will not be ignored
 	 * @deprecated Use `GetPartBoundsInBox` instead
 	 */
-	IsRegion3EmptyWithIgnoreList(this: WorldRoot, region: Region3, ignoreDescendentsTable: Instances): boolean;
+	IsRegion3EmptyWithIgnoreList(this: WorldRoot, region: Region3, ignoreDescendentsTable: ReadonlyArray<Instance>): boolean;
 	/**
 	 * Casts a ray using an origin, direction, and optional [RaycastParams](https://developer.roblox.com/en-us/api-reference/datatype/RaycastParams). If it finds an eligible [BasePart](https://developer.roblox.com/en-us/api-reference/class/BasePart) or [Terrain](https://developer.roblox.com/en-us/api-reference/class/Terrain) cell, a [RaycastResult](https://developer.roblox.com/en-us/api-reference/datatype/RaycastResult) is returned containing the results of the operation. If no [RaycastParams](https://developer.roblox.com/en-us/api-reference/datatype/RaycastParams) object is provided, the defaults are used (all parts are considered and [Terrain](https://developer.roblox.com/en-us/api-reference/class/Terrain) water is not ignored).
 	 * 
@@ -27330,7 +27455,7 @@ interface Workspace extends WorldRoot {
 	 * 
 	 * Developers interested in seeing how this function is used in the Roblox Studio should see the [Studio Tools GitHub repository](https://github.com/Roblox/Studio-Tools).
 	 */
-	JoinToOutsiders(this: Workspace, objects: Instances, jointType: CastsToEnum<Enum.JointCreationMode>): void;
+	JoinToOutsiders(this: Workspace, objects: ReadonlyArray<Instance>, jointType: CastsToEnum<Enum.JointCreationMode>): void;
 	/**
 	 * Returns true if the game has the PGS Physics solver enabled.
 	 * 
@@ -27367,7 +27492,7 @@ interface Workspace extends WorldRoot {
 	 * 
 	 * Developers interested in seeing how this function is used in the Roblox Studio should see the [Studio Tools GitHub repository](https://github.com/Roblox/Studio-Tools).
 	 */
-	UnjoinFromOutsiders(this: Workspace, objects: Instances): void;
+	UnjoinFromOutsiders(this: Workspace, objects: ReadonlyArray<Instance>): void;
 	readonly PersistentLoaded: RBXScriptSignal<(player: Player) => void>;
 }
 
@@ -28277,6 +28402,17 @@ interface PausedStateException extends PausedState {
 	 * @deprecated
 	 */
 	readonly _nominal_PausedStateException: unique symbol;
+}
+
+interface PerformanceControlService extends Instance {
+	/**
+	 * **DO NOT USE!**
+	 *
+	 * This field exists to force TypeScript to recognize this as a nominal type
+	 * @hidden
+	 * @deprecated
+	 */
+	readonly _nominal_PerformanceControlService: unique symbol;
 }
 
 /** PhysicsService is a game service that has functions for working with **collision groups**, which define a set of parts that may or may not collide with parts assigned to other collision groups. Assign a part to a collision group using [SetPartCollisionGroup](https://developer.roblox.com/en-us/api-reference/function/PhysicsService/SetPartCollisionGroup). Collision groups and their relationships are saved to and loaded from file.
@@ -29877,6 +30013,10 @@ interface PolicyService extends Instance {
 	 */
 	readonly _nominal_PolicyService: unique symbol;
 	/**
+	 * Tags: Yields
+	 */
+	CanViewBrandProjectAsync(this: PolicyService, player: Player, brandProjectId: string): boolean;
+	/**
 	 * Returns policy information about a player which is based on geolocation, age group, and platform. The structure of the returned dictionary is as follows:
 	 * 
 	 * Name
@@ -30031,7 +30171,7 @@ interface Pose extends PoseBase {
 	 * 
 	 * Note, this function will return all children of the [Pose](https://developer.roblox.com/en-us/api-reference/class/Pose), including non [Pose](https://developer.roblox.com/en-us/api-reference/class/Pose) [Instance](https://developer.roblox.com/en-us/api-reference/class/Instance)s if any are present.
 	 */
-	GetSubPoses(this: Pose): Instances;
+	GetSubPoses(this: Pose): ReadonlyArray<Instance>;
 	/**
 	 * This function removes a sub [Pose](https://developer.roblox.com/en-us/api-reference/class/Pose) from the [Pose](https://developer.roblox.com/en-us/api-reference/class/Pose) by parenting it to nil. It is functionally identical to setting the new pose's [Instance.Parent](https://developer.roblox.com/en-us/api-reference/property/Instance/Parent) to nil.
 	 * 
@@ -33930,9 +34070,9 @@ interface StyleBase extends Instance {
 	 * @deprecated
 	 */
 	readonly _nominal_StyleBase: unique symbol;
-	GetStyleRules(this: StyleBase): Instances;
+	GetStyleRules(this: StyleBase): ReadonlyArray<Instance>;
 	InsertStyleRule(this: StyleBase, rule: StyleRule, index: number | undefined): void;
-	SetStyleRules(this: StyleBase, rules: Instances): void;
+	SetStyleRules(this: StyleBase, rules: ReadonlyArray<Instance>): void;
 	readonly StyleRulesChanged: RBXScriptSignal<() => void>;
 }
 
@@ -33966,8 +34106,8 @@ interface StyleSheet extends StyleBase {
 	 * @deprecated
 	 */
 	readonly _nominal_StyleSheet: unique symbol;
-	GetDerives(this: StyleSheet): Instances;
-	SetDerives(this: StyleSheet, derives: Instances): void;
+	GetDerives(this: StyleSheet): ReadonlyArray<Instance>;
+	SetDerives(this: StyleSheet, derives: ReadonlyArray<Instance>): void;
 }
 
 interface StyleDerive extends Instance {
@@ -39399,6 +39539,42 @@ interface VideoDeviceInput extends Instance {
 	 * Tags: NotReplicated
 	 */
 	readonly IsReady: boolean;
+}
+
+interface VideoPlayer extends Instance {
+	/**
+	 * **DO NOT USE!**
+	 *
+	 * This field exists to force TypeScript to recognize this as a nominal type
+	 * @hidden
+	 * @deprecated
+	 */
+	readonly _nominal_VideoPlayer: unique symbol;
+	Asset: ContentId;
+	AutoLoad: boolean;
+	readonly IsPlaying: boolean;
+	/**
+	 * Tags: NotReplicated
+	 */
+	readonly IsReady: boolean;
+	Looping: boolean;
+	PlaybackSpeed: number;
+	/**
+	 * Tags: NotReplicated
+	 */
+	readonly Resolution: Vector2;
+	Thumbnail: ContentId;
+	/**
+	 * Tags: NotReplicated
+	 */
+	readonly TimeLength: number;
+	TimePosition: number;
+	Volume: number;
+	GetConnectedWires(this: VideoPlayer, pin: string): ReadonlyArray<Instance>;
+	Play(this: VideoPlayer): void;
+	Stop(this: VideoPlayer): void;
+	readonly Ended: RBXScriptSignal<() => void>;
+	readonly Looped: RBXScriptSignal<() => void>;
 }
 
 interface VideoService extends Instance {

@@ -2211,6 +2211,27 @@ declare namespace Enum {
 	}
 	export type AudioFilterType = AudioFilterType.Peak | AudioFilterType.LowShelf | AudioFilterType.HighShelf | AudioFilterType.Lowpass12dB | AudioFilterType.Lowpass24dB | AudioFilterType.Lowpass48dB | AudioFilterType.Highpass12dB | AudioFilterType.Highpass24dB | AudioFilterType.Highpass48dB | AudioFilterType.Bandpass | AudioFilterType.Notch;
 
+	export namespace AudioSimulationFidelity {
+		export interface None extends globalThis.EnumItem {
+			Name: "None";
+			Value: 0;
+			EnumType: typeof globalThis.Enum.AudioSimulationFidelity;
+		}
+
+		export const None: None;
+
+		export interface Automatic extends globalThis.EnumItem {
+			Name: "Automatic";
+			Value: 1;
+			EnumType: typeof globalThis.Enum.AudioSimulationFidelity;
+		}
+
+		export const Automatic: Automatic;
+
+		export function GetEnumItems(this: globalThis.Enum): Array<globalThis.Enum.AudioSimulationFidelity>;
+	}
+	export type AudioSimulationFidelity = AudioSimulationFidelity.None | AudioSimulationFidelity.Automatic;
+
 	export namespace AudioSubType {
 		export interface Music extends globalThis.EnumItem {
 			Name: "Music";
@@ -3465,35 +3486,6 @@ declare namespace Enum {
 		export function GetEnumItems(this: globalThis.Enum): Array<globalThis.Enum.ButtonStyle>;
 	}
 	export type ButtonStyle = ButtonStyle.Custom | ButtonStyle.RobloxButtonDefault | ButtonStyle.RobloxButton | ButtonStyle.RobloxRoundButton | ButtonStyle.RobloxRoundDefaultButton | ButtonStyle.RobloxRoundDropdownButton;
-
-	export namespace CSGAsyncDynamicCollision {
-		export interface Default extends globalThis.EnumItem {
-			Name: "Default";
-			Value: 0;
-			EnumType: typeof globalThis.Enum.CSGAsyncDynamicCollision;
-		}
-
-		export const Default: Default;
-
-		export interface Disabled extends globalThis.EnumItem {
-			Name: "Disabled";
-			Value: 1;
-			EnumType: typeof globalThis.Enum.CSGAsyncDynamicCollision;
-		}
-
-		export const Disabled: Disabled;
-
-		export interface Enabled extends globalThis.EnumItem {
-			Name: "Enabled";
-			Value: 2;
-			EnumType: typeof globalThis.Enum.CSGAsyncDynamicCollision;
-		}
-
-		export const Enabled: Enabled;
-
-		export function GetEnumItems(this: globalThis.Enum): Array<globalThis.Enum.CSGAsyncDynamicCollision>;
-	}
-	export type CSGAsyncDynamicCollision = CSGAsyncDynamicCollision.Default | CSGAsyncDynamicCollision.Disabled | CSGAsyncDynamicCollision.Enabled;
 
 	export namespace CageType {
 		export interface Inner extends globalThis.EnumItem {
@@ -5713,6 +5705,43 @@ declare namespace Enum {
 	}
 	export type CoreGuiType = CoreGuiType.PlayerList | CoreGuiType.Health | CoreGuiType.Backpack | CoreGuiType.Chat | CoreGuiType.All | CoreGuiType.EmotesMenu | CoreGuiType.SelfView | CoreGuiType.Captures;
 
+	export namespace CreateAssetResult {
+		export interface Success extends globalThis.EnumItem {
+			Name: "Success";
+			Value: 1;
+			EnumType: typeof globalThis.Enum.CreateAssetResult;
+		}
+
+		export const Success: Success;
+
+		export interface PermissionDenied extends globalThis.EnumItem {
+			Name: "PermissionDenied";
+			Value: 2;
+			EnumType: typeof globalThis.Enum.CreateAssetResult;
+		}
+
+		export const PermissionDenied: PermissionDenied;
+
+		export interface UploadFailed extends globalThis.EnumItem {
+			Name: "UploadFailed";
+			Value: 3;
+			EnumType: typeof globalThis.Enum.CreateAssetResult;
+		}
+
+		export const UploadFailed: UploadFailed;
+
+		export interface Unknown extends globalThis.EnumItem {
+			Name: "Unknown";
+			Value: 4;
+			EnumType: typeof globalThis.Enum.CreateAssetResult;
+		}
+
+		export const Unknown: Unknown;
+
+		export function GetEnumItems(this: globalThis.Enum): Array<globalThis.Enum.CreateAssetResult>;
+	}
+	export type CreateAssetResult = CreateAssetResult.Success | CreateAssetResult.PermissionDenied | CreateAssetResult.UploadFailed | CreateAssetResult.Unknown;
+
 	export namespace CreateOutfitFailure {
 		export interface InvalidName extends globalThis.EnumItem {
 			Name: "InvalidName";
@@ -6578,6 +6607,51 @@ declare namespace Enum {
 		export function GetEnumItems(this: globalThis.Enum): Array<globalThis.Enum.DeviceFeatureType>;
 	}
 	export type DeviceFeatureType = DeviceFeatureType.DeviceCapture;
+
+	export namespace DeviceForm {
+		export interface Console extends globalThis.EnumItem {
+			Name: "Console";
+			Value: 0;
+			EnumType: typeof globalThis.Enum.DeviceForm;
+		}
+
+		export const Console: Console;
+
+		export interface Phone extends globalThis.EnumItem {
+			Name: "Phone";
+			Value: 1;
+			EnumType: typeof globalThis.Enum.DeviceForm;
+		}
+
+		export const Phone: Phone;
+
+		export interface Tablet extends globalThis.EnumItem {
+			Name: "Tablet";
+			Value: 2;
+			EnumType: typeof globalThis.Enum.DeviceForm;
+		}
+
+		export const Tablet: Tablet;
+
+		export interface Desktop extends globalThis.EnumItem {
+			Name: "Desktop";
+			Value: 3;
+			EnumType: typeof globalThis.Enum.DeviceForm;
+		}
+
+		export const Desktop: Desktop;
+
+		export interface VR extends globalThis.EnumItem {
+			Name: "VR";
+			Value: 4;
+			EnumType: typeof globalThis.Enum.DeviceForm;
+		}
+
+		export const VR: VR;
+
+		export function GetEnumItems(this: globalThis.Enum): Array<globalThis.Enum.DeviceForm>;
+	}
+	export type DeviceForm = DeviceForm.Console | DeviceForm.Phone | DeviceForm.Tablet | DeviceForm.Desktop | DeviceForm.VR;
 
 	export namespace DeviceLevel {
 		export interface Low extends globalThis.EnumItem {
@@ -10105,27 +10179,6 @@ declare namespace Enum {
 	}
 	export type InputType = InputType.NoInput | InputType.Constant | InputType.Sin;
 
-	export namespace Intent {
-		export interface Realistic extends globalThis.EnumItem {
-			Name: "Realistic";
-			Value: 0;
-			EnumType: typeof globalThis.Enum.Intent;
-		}
-
-		export const Realistic: Realistic;
-
-		export interface Flat extends globalThis.EnumItem {
-			Name: "Flat";
-			Value: 1;
-			EnumType: typeof globalThis.Enum.Intent;
-		}
-
-		export const Flat: Flat;
-
-		export function GetEnumItems(this: globalThis.Enum): Array<globalThis.Enum.Intent>;
-	}
-	export type Intent = Intent.Realistic | Intent.Flat;
-
 	export namespace InterpolationThrottlingMode {
 		export interface Default extends globalThis.EnumItem {
 			Name: "Default";
@@ -12620,6 +12673,27 @@ declare namespace Enum {
 		export function GetEnumItems(this: globalThis.Enum): Array<globalThis.Enum.LexemeType>;
 	}
 	export type LexemeType = LexemeType.Eof | LexemeType.Name | LexemeType.QuotedString | LexemeType.Number | LexemeType.And | LexemeType.Or | LexemeType.Equal | LexemeType.TildeEqual | LexemeType.GreaterThan | LexemeType.GreaterThanEqual | LexemeType.LessThan | LexemeType.LessThanEqual | LexemeType.Colon | LexemeType.Dot | LexemeType.LeftParenthesis | LexemeType.RightParenthesis | LexemeType.Star | LexemeType.DoubleStar | LexemeType.ReservedSpecial;
+
+	export namespace LightingStyle {
+		export interface Realistic extends globalThis.EnumItem {
+			Name: "Realistic";
+			Value: 0;
+			EnumType: typeof globalThis.Enum.LightingStyle;
+		}
+
+		export const Realistic: Realistic;
+
+		export interface Soft extends globalThis.EnumItem {
+			Name: "Soft";
+			Value: 1;
+			EnumType: typeof globalThis.Enum.LightingStyle;
+		}
+
+		export const Soft: Soft;
+
+		export function GetEnumItems(this: globalThis.Enum): Array<globalThis.Enum.LightingStyle>;
+	}
+	export type LightingStyle = LightingStyle.Realistic | LightingStyle.Soft;
 
 	export namespace Limb {
 		export interface Head extends globalThis.EnumItem {
@@ -16001,27 +16075,6 @@ declare namespace Enum {
 		export function GetEnumItems(this: globalThis.Enum): Array<globalThis.Enum.ProximityPromptStyle>;
 	}
 	export type ProximityPromptStyle = ProximityPromptStyle.Default | ProximityPromptStyle.Custom;
-
-	export namespace Quality {
-		export interface Performance extends globalThis.EnumItem {
-			Name: "Performance";
-			Value: 0;
-			EnumType: typeof globalThis.Enum.Quality;
-		}
-
-		export const Performance: Performance;
-
-		export interface Quality extends globalThis.EnumItem {
-			Name: "Quality";
-			Value: 1;
-			EnumType: typeof globalThis.Enum.Quality;
-		}
-
-		export const Quality: Quality;
-
-		export function GetEnumItems(this: globalThis.Enum): Array<globalThis.Enum.Quality>;
-	}
-	export type Quality = Quality.Performance | Quality.Quality;
 
 	export namespace QualityLevel {
 		export interface Automatic extends globalThis.EnumItem {

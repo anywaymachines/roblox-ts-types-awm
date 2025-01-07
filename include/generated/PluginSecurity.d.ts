@@ -507,7 +507,7 @@ interface DebuggerManager extends Instance {
 	/**
 	 * Returns a list of [ScriptDebugger](https://developer.roblox.com/en-us/api-reference/class/ScriptDebugger) present in the experience.
 	 */
-	GetDebuggers(this: DebuggerManager): Instances;
+	GetDebuggers(this: DebuggerManager): ReadonlyArray<Instance>;
 	/**
 	 * Resumes the Lua Debugger if it is paused.
 	 */
@@ -1210,7 +1210,7 @@ interface PluginMouse extends Mouse {
 	/**
 	 * Fired when Instances are being selected while the mouse is dragging.
 	 */
-	readonly DragEnter: RBXScriptSignal<(instances: Instances) => void>;
+	readonly DragEnter: RBXScriptSignal<(instances: ReadonlyArray<Instance>) => void>;
 }
 
 interface MultipleDocumentInterfaceInstance extends Instance {
@@ -1562,7 +1562,7 @@ interface WorldRoot extends Model {
 	 * *   If translate stiffness and rotate stiffness are both equal to 0, then the target CFrame will be ignored and physical constraints will be solved for the object at the position where it was.
 	 */
 	IKMoveTo(this: WorldRoot, part: BasePart, target: CFrame, translateStiffness?: number, rotateStiffness?: number, collisionsMode?: CastsToEnum<Enum.IKCollisionsMode>): void;
-	StepPhysics(this: WorldRoot, dt: number, parts?: Instances): void;
+	StepPhysics(this: WorldRoot, dt: number, parts?: ReadonlyArray<Instance>): void;
 }
 
 interface Workspace extends WorldRoot {
@@ -2130,7 +2130,7 @@ interface Plugin extends Instance {
 	 * @deprecated
 	 */
 	GetStudioUserId(this: Plugin): number;
-	Intersect(this: Plugin, objects: Instances): Instance | undefined;
+	Intersect(this: Plugin, objects: ReadonlyArray<Instance>): Instance | undefined;
 	/**
 	 * This function returns true if this plugin is currently active, after having been activated via the [Plugin:Activate](https://developer.roblox.com/en-us/api-reference/function/Plugin/Activate) function.
 	 */
@@ -2148,7 +2148,7 @@ interface Plugin extends Instance {
 	/**
 	 * Negates the given parts and returns the resulting NegateOperations.
 	 */
-	Negate(this: Plugin, objects: Instances): Instances;
+	Negate(this: Plugin, objects: ReadonlyArray<Instance>): ReadonlyArray<Instance>;
 	/**
 	 * Used to open the given script instance in an editor window, in Roblox studio, at the given line. If no line is given as an argument it will default to 0.
 	 */
@@ -2175,7 +2175,7 @@ interface Plugin extends Instance {
 	/**
 	 * Separates the given UnionOperations and returns the resulting parts.
 	 */
-	Separate(this: Plugin, objects: Instances): Instances;
+	Separate(this: Plugin, objects: ReadonlyArray<Instance>): ReadonlyArray<Instance>;
 	/**
 	 * Stores a given value for later use under the given key. The value will persist even after studio is closed.
 	 */
@@ -2965,7 +2965,7 @@ interface ScriptDebugger extends Instance {
 	/**
 	 * Returns a list of [DebuggerBreakpoint](https://developer.roblox.com/en-us/api-reference/class/DebuggerBreakpoint) present in the script.
 	 */
-	GetBreakpoints(this: ScriptDebugger): Instances;
+	GetBreakpoints(this: ScriptDebugger): ReadonlyArray<Instance>;
 	/**
 	 * Returns a dictionary of all variables that are present in the global environment of the stack frame, where the keys are the names of the variables, and the values are the actual values of the variables.  
 	 * Each stack frame might see different global variables if function environments are different.
@@ -2990,7 +2990,7 @@ interface ScriptDebugger extends Instance {
 	/**
 	 * Returns a list with all the [DebuggerWatch](https://developer.roblox.com/en-us/api-reference/class/DebuggerWatch) instances for this debugger.
 	 */
-	GetWatches(this: ScriptDebugger): Instances;
+	GetWatches(this: ScriptDebugger): ReadonlyArray<Instance>;
 	/**
 	 * Sets the specified line of the script as a breakpoint. Returns a [DebuggerBreakpoint](https://developer.roblox.com/en-us/api-reference/class/DebuggerBreakpoint) that you can use to manage the breakpoint.
 	 */
@@ -3090,7 +3090,7 @@ interface ScriptEditorService extends Instance {
 	DeregisterScriptAnalysisCallback(this: ScriptEditorService, name: string): void;
 	FindScriptDocument(this: ScriptEditorService, script: LuaSourceContainer): ScriptDocument;
 	GetEditorSource(this: ScriptEditorService, script: LuaSourceContainer): string;
-	GetScriptDocuments(this: ScriptEditorService): Instances;
+	GetScriptDocuments(this: ScriptEditorService): ReadonlyArray<Instance>;
 	RegisterAutocompleteCallback(this: ScriptEditorService, name: string, priority: number, callbackFunction: Callback): void;
 	RegisterScriptAnalysisCallback(this: ScriptEditorService, name: string, priority: number, callbackFunction: Callback): void;
 	/**
@@ -3155,7 +3155,7 @@ interface Selection extends Instance {
 	 * Tags: NotReplicated
 	 */
 	readonly SelectionThickness: number;
-	Add(this: Selection, instancesToAdd: Instances): void;
+	Add(this: Selection, instancesToAdd: ReadonlyArray<Instance>): void;
 	/**
 	 * Returns an array of currently selected [Instance](https://developer.roblox.com/en-us/api-reference/class/Instance)s in Roblox Studio.
 	 * 
@@ -3165,8 +3165,8 @@ interface Selection extends Instance {
 	 * 
 	 * For changing the current selection, please see [Selection:Set](https://developer.roblox.com/en-us/api-reference/function/Selection/Set).
 	 */
-	Get(this: Selection): Instances;
-	Remove(this: Selection, instancesToRemove: Instances): void;
+	Get(this: Selection): ReadonlyArray<Instance>;
+	Remove(this: Selection, instancesToRemove: ReadonlyArray<Instance>): void;
 	/**
 	 * Sets the currently selected objects in Roblox Studio to [Instance](https://developer.roblox.com/en-us/api-reference/class/Instance)s in the given array.
 	 * 
@@ -3178,7 +3178,7 @@ interface Selection extends Instance {
 	 * table.insert(selected, object)
 	 * Selection:Set(selected)
 	 */
-	Set(this: Selection, selection: Instances): void;
+	Set(this: Selection, selection: ReadonlyArray<Instance>): void;
 	/**
 	 * Fires when the [Instance](https://developer.roblox.com/en-us/api-reference/class/Instance)s selected in Roblox Studio changes.
 	 * 
@@ -3255,7 +3255,7 @@ interface DataModel extends ServiceProvider<Services> {
 	 * 
 	 * Due to this function's security context it can only be used by plugins or the command bar. For an alternative that can be used in [Scripts](https://developer.roblox.com/en-us/api-reference/class/Script) and [LocalScripts](https://developer.roblox.com/en-us/api-reference/class/LocalScript), see [InsertService:LoadAsset](https://developer.roblox.com/en-us/api-reference/function/InsertService/LoadAsset).
 	 */
-	GetObjects(this: DataModel, url: ContentId): Instances;
+	GetObjects(this: DataModel, url: ContentId): ReadonlyArray<Instance>;
 	/**
 	 * This function sets the [DataModel.PlaceId](https://developer.roblox.com/en-us/api-reference/property/DataModel/PlaceId) of the game instance to the given _placeId_.
 	 * 
@@ -3321,8 +3321,8 @@ interface SoundService extends Instance {
 	 */
 	readonly _nominal_SoundService: unique symbol;
 	DefaultListenerLocation: Enum.ListenerLocation;
-	OpenAttenuationCurveEditor(this: SoundService, selectedCurveObjects: Instances): void;
-	OpenDirectionalCurveEditor(this: SoundService, selectedCurveObjects: Instances): void;
+	OpenAttenuationCurveEditor(this: SoundService, selectedCurveObjects: ReadonlyArray<Instance>): void;
+	OpenDirectionalCurveEditor(this: SoundService, selectedCurveObjects: ReadonlyArray<Instance>): void;
 }
 
 /** A StatsItem is an internal measurement item that is created by the engine to benchmark many of the backend components of Roblox.  
@@ -3880,7 +3880,7 @@ interface StudioService extends Instance {
 	 * 
 	 * Tags: Yields
 	 */
-	PromptImportFiles(this: StudioService, fileTypeFilter?: Array<any>): Instances;
+	PromptImportFiles(this: StudioService, fileTypeFilter?: Array<any>): ReadonlyArray<Instance>;
 }
 
 interface StudioTheme extends Instance {

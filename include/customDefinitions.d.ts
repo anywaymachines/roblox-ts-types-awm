@@ -125,6 +125,10 @@ interface AvatarEditorService extends Instance {
 		contextAssetId?: number,
 	): ReadonlyArray<RecommendedAsset>;
 	GetRecommendedBundles(this: AvatarEditorService, bundleId: number): ReadonlyArray<RecommendedBundle>;
+	CheckApplyDefaultClothing(
+		this: AvatarEditorService,
+		humanoidDescription: HumanoidDescription,
+	): HumanoidDescription | undefined;
 }
 
 /** @client */
@@ -214,7 +218,7 @@ interface BindableFunction<T extends Callback = Callback> extends Instance {
 	Invoke(this: BindableFunction, ...args: Parameters<T>): ReturnType<T>;
 }
 
-interface Camera extends Instance {
+interface Camera extends PVInstance {
 	CameraSubject: Humanoid | BasePart | undefined;
 	GetPartsObscuringTarget(this: Camera, castPoints: Array<Vector3>, ignoreList: Array<Instance>): Array<Instance>;
 	WorldToScreenPoint(this: Camera, worldPoint: Vector3): LuaTuple<[Vector3, boolean]>;
@@ -841,15 +845,6 @@ interface Players extends Instance {
 }
 
 interface Plugin extends Instance {
-	CreatePluginAction(
-		this: Plugin,
-		actionId: string,
-		text: string,
-		statusTip: string,
-		iconName?: string,
-		allowBinding?: boolean,
-	): PluginAction;
-	CreatePluginMenu(this: Plugin, id: string, title?: string, icon?: string): PluginMenu;
 	ImportFbxRig(this: Plugin, isR15?: boolean): Model;
 	Union(this: Plugin, objects: Array<BasePart>): UnionOperation;
 }
@@ -862,16 +857,6 @@ interface PluginMenu extends Instance {
 	AddAction(this: PluginMenu, action: PluginAction): void;
 	AddMenu(this: PluginMenu, menu: PluginMenu): void;
 	AddNewAction(this: PluginMenu, actionId: string, text: string, icon?: string): PluginAction;
-}
-
-interface PluginToolbar extends Instance {
-	CreateButton(
-		this: PluginToolbar,
-		buttonId: string,
-		tooltip: string,
-		iconname: string,
-		text?: string,
-	): PluginToolbarButton;
 }
 
 interface PolicyService extends Instance {
@@ -1126,7 +1111,9 @@ interface TextChannel extends Instance {
 	AddUserAsync(
 		this: TextChannel,
 		userId: number,
-	): [source: TextSource, isNew: true] | [source: TextSource, isNew: false] | [source: undefined, isNew: false];
+	): LuaTuple<
+		[source: TextSource, isNew: true] | [source: TextSource, isNew: false] | [source: undefined, isNew: false]
+	>;
 }
 
 interface TextChatService extends Instance {
@@ -1155,6 +1142,15 @@ interface TweenService extends Instance {
 		tweenInfo: TweenInfo,
 		propertyTable: Partial<ExtractMembers<T, Tweenable>>,
 	): Tween;
+	SmoothDamp<T extends number | Vector2 | Vector3 | CFrame>(
+		this: TweenService,
+		current: T,
+		target: T,
+		velocity: T,
+		smoothTime: number,
+		maxSpeed?: number,
+		dt?: number,
+	): LuaTuple<[T, T]>;
 }
 
 interface UIPageLayout extends UIGridStyleLayout {
